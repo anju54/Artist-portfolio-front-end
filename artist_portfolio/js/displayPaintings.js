@@ -17,6 +17,7 @@ $(document).ready(function() {
 });
 
 function bindEvent(){
+
     var token = window.localStorage.getItem("TOKEN");
     $('#imgDiv img').click(function(){
         var source = $(this).attr('src');
@@ -137,9 +138,6 @@ function imagePreview(source){
 function closePreview(){
     $('#over').remove();
 }
-
-    
-
 
 function setPublicOrprivate(token, id){
 

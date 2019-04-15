@@ -8,6 +8,7 @@ $(document).ready(function() {
         showPublicPaintings(id); 
     });
       
+    // bindCall();
 });
 
 function showPublicPaintings(id){
@@ -40,7 +41,11 @@ function showPublicPaintings(id){
         },
         error: function( error) {
             console.log(error);
-        }             
+        }   ,
+        complete: function () {
+                
+            bindCall();
+        }           
     });
      
 }
@@ -58,4 +63,31 @@ function setAllPaintings(response){
 
         $('#publicImgDiv').append(col);          
     }    
+}
+
+
+function publicImagePreview(source){
+    var source1 = source;
+    var index = source.indexOf('thumbnail/thumb');
+    source = source.substring(0,index)+source1.substring(index+15);
+    var div= document.createElement("div");
+    div.className += 'over';
+    div.id += 'over';
+    document.body.appendChild(div);
+    var div = '<div class="container" id="prev"><img style="max-height:500px;" id="prev-img" src="'+source+'"/>'+
+        '<span style=color: white;><button id="closePrev" class="btn btn-primary" onClick="closePreview();">Close</button></span></div>';
+    $('#over').append(div);
+
+}
+
+function bindCall(){
+    $('#publicImgDiv img').click(function(){
+        var source = $(this).attr('src');
+        publicImagePreview(source);
+    });
+}
+
+
+function closePreview(){
+    $('#over').remove();
 }
