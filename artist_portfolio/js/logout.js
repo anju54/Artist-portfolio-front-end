@@ -9,6 +9,7 @@ $(document).ready(function() {
     
  });
 
+ //This is used for calling the ajax call for logout
 function logout(token){
     $.ajax({
         url: `${baseUrl}/api/user-logout`,

@@ -1,9 +1,5 @@
-// $(document).ready(function() {
 
-//     var token = window.localStorage.getItem("TOKEN");
-//     getAllColors(token);     
-// });
-
+//This is used to fetch all the colors
 function getAllColors(token){
 
     $.ajax({
@@ -27,6 +23,7 @@ function getAllColors(token){
     });
 }
 
+//This is used for creating color dropdown list
 function populateColorsList(response){
 
     for(var i=0; i<response.length;i++){

@@ -1,3 +1,4 @@
+// This is used for validating the sigin form
 function validate(){
     
     var password = $('#password').val();

@@ -61,6 +61,7 @@ function hideErrorTag(){
     $('#error').hide();
 }
 
+// used for validating the form
 function validate(){
     
     var newPswrdVal = $('#newPassword').val();

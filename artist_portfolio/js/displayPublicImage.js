@@ -7,10 +7,9 @@ $(document).ready(function() {
     $('#loadMore').click(function () {
         showPublicPaintings(id); 
     });
-      
-    // bindCall();
 });
 
+//This is used for displaying all the public images
 function showPublicPaintings(id){
 
     $.ajax({
@@ -19,9 +18,6 @@ function showPublicPaintings(id){
         crossDomain: true,
         data: {},
         async: false,
-        // beforeSend: function (xhr) {
-        //     xhr.setRequestHeader('Authorization','Bearer '+token);
-        // },
         headers: {
             "Content-Type": "application/json",
         },
@@ -35,8 +31,7 @@ function showPublicPaintings(id){
             } else{
                 swal('There are no more paintings')
                 $('#loadMore').hide();
-            }
-             
+            } 
             counter++;            
         },
         error: function( error) {
@@ -50,6 +45,7 @@ function showPublicPaintings(id){
      
 }
 
+// This is used to set all the imges to the page
 function setAllPaintings(response){
 
     var paintingList = response.mediaList;
@@ -65,7 +61,7 @@ function setAllPaintings(response){
     }    
 }
 
-
+//This is used to preview the images when user hover the image
 function publicImagePreview(source){
     var source1 = source;
     var index = source.indexOf('thumbnail/thumb');
@@ -87,7 +83,7 @@ function bindCall(){
     });
 }
 
-
+//This is used for closing the preview div
 function closePreview(){
     $('#over').remove();
 }

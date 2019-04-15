@@ -260,13 +260,10 @@ function getLoggedArtistProfile(token,username){
         },
         'async': false,
         success: function (response) {
-            
             window.localStorage.setItem("ARTIST",response);  
-
         },
         error: function( ) {
             console.log(error);
-
         }         
     });
 }

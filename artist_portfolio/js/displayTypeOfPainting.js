@@ -1,9 +1,4 @@
-// $(document).ready(function() {
-
-//     var token = window.localStorage.getItem("TOKEN");
-//     getAllPaintingType(token);     
-// });
-
+//This is used to get all the painting type
 function getAllPaintingType(token){
 
     $.ajax({
@@ -27,6 +22,7 @@ function getAllPaintingType(token){
     });
 }
 
+//this is used for populating painting type list
 function populatePaintingTypeList(response){
     
     for(var i=0; i<response.length;i++){

@@ -9,10 +9,10 @@ $(document).ready(function() {
         showPaintings(token);
     });
 
-    $('input[name=publicOrPrivate]').change( function(){
-        var id = $(this).attr('id');
-        setPublicOrprivate(token,id);
-    });
+    // $('input[name=publicOrPrivate]').change( function(){
+    //     var id = $(this).attr('id');
+    //     setPublicOrprivate(token,id);
+    // });
 
 });
 
@@ -23,6 +23,11 @@ function bindEvent(){
         var source = $(this).attr('src');
         imagePreview(source);
      });
+
+     $('input[name=publicOrPrivate]').change( function(){
+        var id = $(this).attr('id');
+        setPublicOrprivate(token,id);
+    });
 
      $(".deleteBtn").click(function () {
         swal({
@@ -49,7 +54,7 @@ function bindEvent(){
     });
 }
 
-
+// This is used to fetch all the painting of a particular artist
 function showPaintings(token){
     $.ajax({
         url:  `${baseUrl}/api/media/artist/albums/${counter}/6` ,
@@ -91,6 +96,7 @@ function showPaintings(token){
      
 }
 
+// This is used to create img tag for displaying painting
 function setAllPaintings(response){
     console.log('called');
     for(var i=0; i<response.length;i++){
@@ -99,8 +105,7 @@ function setAllPaintings(response){
         if (i%2 === 0) {
             divid= 'row'+c;
             c++;
-        var row = '<div class="row" id="'+divid+'"></div>';
-        
+            var row = '<div class="row" id="'+divid+'"></div>';
             $('#imgDiv').append(row);
         }
 
@@ -121,6 +126,7 @@ function setAllPaintings(response){
     }
 }
 
+// This is used to preview when user hover the image to see the full image
 function imagePreview(source){
     var source1 = source; 
     var index = source.indexOf('thumbnail/thumb');
@@ -135,10 +141,12 @@ function imagePreview(source){
    
 }
 
+// This is used for closing the preview option
 function closePreview(){
     $('#over').remove();
 }
 
+//This is used to set public or private the images 
 function setPublicOrprivate(token, id){
 
     var isPublic;
@@ -163,7 +171,6 @@ function setPublicOrprivate(token, id){
         headers: {
             "Content-Type": "application/json",
         },
-        'async': false,
         success: function (response) {
             console.log(response);
                  
@@ -174,6 +181,7 @@ function setPublicOrprivate(token, id){
     });
 }
 
+// This is used to delete the painting
 function deletePainting(token,id){
     $.ajax({
         url:  `${baseUrl}/api/media/${id}` ,
@@ -197,7 +205,6 @@ function deletePainting(token,id){
                     paintingList.splice(i,1);
                 }
             }
-            // $('#'+id).parent().parent().remove();
              setAllPaintings(paintingList);
              bindEvent();
            

@@ -1,19 +1,4 @@
-// $(document).ready(function() {
-
-//     var token = window.localStorage.getItem("TOKEN");
-//     $('#updateImage').hide();
-//     showProfilePic(token);   
-
-//     $("#updateImage").click(function(event) {
-
-//         event.preventDefault();
-
-//         var form = $('#uploadimage')[0];
-//         var data = new FormData(form);
-//         updateProfilePic(token,data);
-//     }); 
-// });
-
+//This is used for making ajax call displaying the profile pic
 function showProfilePic(token){
 
     $.ajax({
@@ -35,8 +20,7 @@ function showProfilePic(token){
                 $('#saveImage').hide();  
             }else{
                 $('#updateImage').hide();
-            }
-                     
+            }          
         },
         error: function( error) {
             console.log(error);
@@ -45,6 +29,7 @@ function showProfilePic(token){
     });
 }
 
+//This is used to set the profile pic
 function setProfilePic(response){
    
     path = baseUrl + response.path + response.fileName;
@@ -52,6 +37,7 @@ function setProfilePic(response){
     $('#profileImage').attr("src",path);
 }
 
+//This is used for making ajax call for updating the profile pic
 function updateProfilePic(token,file){
     console.log(file.length);
     if(file!=null){

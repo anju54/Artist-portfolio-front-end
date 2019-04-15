@@ -6,6 +6,7 @@ $(document).ready(function() {
      
 });
 
+//This is used to fetch artist profile basic information
 function getArtistProfileInfo(id){
 
     $.ajax({
@@ -29,6 +30,7 @@ function getArtistProfileInfo(id){
 
 }
 
+//This is used to set the artist basic information to artist profile page
 function setData(response){
 
     $("#fullName").text(response.fname+" "+response.lname) ;

@@ -1,19 +1,4 @@
-// $(document).ready(function() {
-
-//     var token = window.localStorage.getItem("TOKEN");
-    
-//     $("#saveImage").click(function(event) {
-
-//         event.preventDefault();
-
-//         var form = $('#uploadimage')[0];
-//         var data = new FormData(form);
-//         console.log(data);
-//         uploadProfilePic(token,data);
-//     }); 
-    
-//  });
- 
+//This is used for uplaoding the profile pic
  function uploadProfilePic(token,file){
 
     showLoader();
@@ -35,8 +20,7 @@
                if(response!=null){
                 swal("profile pic  updated"); 
                 showProfilePic(token);
-               }
-                  
+               }   
             },
             error: function(error) {
                 $('#profilePicShowError').text(error.responseJSON.message);
@@ -45,8 +29,5 @@
                 hideLoader();
             }         
         });
-
-    }
-    
-    
- }
+    }  
+}

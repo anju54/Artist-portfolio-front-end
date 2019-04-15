@@ -1,3 +1,4 @@
+//This is used for validating the signup page
 function validate(){
     
     //var password = $('#password').val();
