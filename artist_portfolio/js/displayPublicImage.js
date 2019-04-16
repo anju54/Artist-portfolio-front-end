@@ -1,7 +1,6 @@
 var counter = 0;
 $(document).ready(function() {
 
-    // var token = window.localStorage.getItem("TOKEN");
     var id = getUrlParameter('id');
     showPublicPaintings(id); 
     $('#loadMore').click(function () {

@@ -65,10 +65,16 @@ function getPublicProfilePic(id){
             "Content-Type": "application/json",
         },
         success: function (response) {
-            console.log(response); 
-            var path = baseUrl + response.path + response.fileName ;
-            $('#profilePic').attr("src",path);
-            console.log(path);  
+            console.log(response);
+            if(response){
+                var path = baseUrl + response.path + response.fileName ;
+                $('#profilePic').attr("src",path);
+                console.log(path);  
+            } else{
+                var staticPath = "./assets/images/default-profile-pic.png";
+                $('#profilePic').attr("src",staticPath);
+            }
+            
         },
         error: function( ) {
         }         
