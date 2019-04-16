@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
-   getUserDetail(token);
+    getUserDetail(token);
 });
 
 // This method is used to get principal user information.
