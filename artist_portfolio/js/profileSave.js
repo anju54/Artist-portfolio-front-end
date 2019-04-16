@@ -1,6 +1,7 @@
 $(document).ready(function() {
    
     $('#update').hide(); 
+    $("#saveImage").hide();
    
     var token = window.localStorage.getItem("TOKEN");
     var username = window.localStorage.getItem("USERNAME");
@@ -42,6 +43,8 @@ $(document).ready(function() {
         getLoggedArtistProfile(token,username);  
     }
     
+    getLoggedArtistProfile(token,username); 
+
     if(id>0){
         showProfilePic(token);
     }
@@ -199,7 +202,8 @@ function saveProfileData(token){
                 window.localStorage.setItem("ARTIST",response);  
                 swal("data saved successfully!!");  
                 getLoggedArtistProfile(token);    
-                showProfilePic(token)  
+                showProfilePic(token) ;
+                $("#saveImage").show();
             },
             error: function( error) {
                 console.log(error.responseJSON.message);

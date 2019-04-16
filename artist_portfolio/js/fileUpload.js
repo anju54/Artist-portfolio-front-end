@@ -22,6 +22,7 @@
                if(response!=null){
                 swal("profile pic  updated"); 
                 showProfilePic(token);
+                $('#deleteImage').show();
                }   
             },
             error: function(error) {

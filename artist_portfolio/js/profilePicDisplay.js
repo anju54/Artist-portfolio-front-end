@@ -15,8 +15,7 @@ function showProfilePic(token){
         'async': false,
         success: function (response) {
             if(response){
-                console.log("--------------");
-                console.log(response);
+                
                 setProfilePic(response);  
                 $('#updateImage').show(); 
                 $('#saveImage').hide();  
