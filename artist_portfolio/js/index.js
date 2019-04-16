@@ -42,7 +42,7 @@ function showAllProfilePics(){
                 $('#loadMore').hide();
             }
              else{
-                swal('There are no more paintings')
+                swal('There are no more Artist!!')
                 $('#loadMore').hide();
             //     $("#selecArtistHeader").hide();
              }

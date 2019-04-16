@@ -44,6 +44,7 @@ function login(){
                 getUserDetail(response.token);          
             },
             error: function(error) {
+                $('#error').show(); 
                 $('#error').text('The email and password you entered did not match our records. Please double-check and try again');
             },
             complete: function () {

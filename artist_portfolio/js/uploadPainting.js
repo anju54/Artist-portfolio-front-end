@@ -32,12 +32,9 @@ $(document).ready(function() {
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-           console.log(response);   
-           
            swal("painting uploaded successfully");
         },
-        error: function(error) {
-            
+        error: function(error) {    
             $('#imageUploadError').text(error.responseJSON.message)
         },
         complete: function () {

@@ -10,7 +10,6 @@ $(document).ready(function() {
     getAllColors(token);
     getArtistProfileData(token);
 
-
     $("#save").click(function() {
         saveProfileData(token);  
     });
@@ -36,9 +35,17 @@ $(document).ready(function() {
         var data = new FormData(form);
         uploadProfilePic(token,data);
     }); 
-    showProfilePic(token);  
-    getLoggedArtistProfile(token,username);
+   
+    var id = window.localStorage.getItem("ARTIST");
+    if(id==0){
+        console.log("calling getLoggedArtistProfile if ARTIST is 0")
+        getLoggedArtistProfile(token,username);  
+    }
     
+    if(id>0){
+        showProfilePic(token);
+    }
+
     $("#deleteImage").click(function () {
         swal({
             title: "Are you sure?",
@@ -116,15 +123,34 @@ function setProfileData(response){
     $('#email').text(response.email);
     $('#bgcol').val(response.colorName);
     var paintingTypeList = response.paintingType;
-    
+    //console.log(paintingTypeList);
+
+    var list = "" ;
     for(var i=0; i<paintingTypeList.length;i++){
+
         var res = paintingTypeList[i].id+"_paintingType";        
        $('#'+res).prop("checked",true);
+
+        list += paintingTypeList[i].paintingName + ",";
+        console.log(list);
     }
+    if(list.length > 50){
+        
+        var res = list.substr(0,50);
+        res += "...."; 
+        $('#optionPaintingType').text(res);
+    }else{
+        var indexVal = list.indexOf(",");
+        var result = list.substr(0,indexVal);
+        $('#optionPaintingType').text(result);
+    }
+    
 }
 
 // This is used to save artist profile data 
 function saveProfileData(token){
+
+    console.log("inside save profile data");
 
     var email = window.localStorage.getItem("USERNAME");
     var fbUrl = $("#fbUrl").val();
@@ -134,7 +160,7 @@ function saveProfileData(token){
     var profileName = $('#profileName').val();
     
    
-    if(validate()){
+    if(validate("save")){
 
         var paintingList = [];
         $.each($("input[name='paintingList']:checked"), function(){            
@@ -169,9 +195,11 @@ function saveProfileData(token){
             },
             'async': false,
             success: function (response) {
-            
+                console.log("printing artist id"+response);
+                window.localStorage.setItem("ARTIST",response);  
                 swal("data saved successfully!!");  
-                getLoggedArtistProfile(token);      
+                getLoggedArtistProfile(token);    
+                showProfilePic(token)  
             },
             error: function( error) {
                 console.log(error.responseJSON.message);
@@ -205,42 +233,46 @@ function updateProfile(token){
     });
     var color = $('#bgcol :selected').val();
 
-    data = {
-        // "profileName":profileName,
-        "fName":fName,
-        "lName":lName,
-        "facebookUrl": fbUrl,
-        "twitterUrl": twitterUrl,
-        "linkedinUrl": linkedInUrl,
-        "aboutMe": aboutMe,
-        "email":email,
-        "paintingType" : paintingList,
-        "colorName":color
-    }
-    console.log("calling update");
-    console.log(data);
-    data = JSON.stringify(data);
+    if(validate("update")){
 
-    $.ajax({
-        url:  `${baseUrl}/api/artist-profile/basic-info/${email}` ,
-        type: "PUT",
-        crossDomain: true,
-        data: data,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization','Bearer '+ token);
-        },
-        headers: {
-            "Content-Type": "application/json",
-        },
-        'async': false,
-        success: function (response) {
-            
-            $('#msg').show();
-            swal("data  updated");          
-        },
-        error: function( error) {
-        }             
-    });
+        data = {
+            // "profileName":profileName,
+            "fName":fName,
+            "lName":lName,
+            "facebookUrl": fbUrl,
+            "twitterUrl": twitterUrl,
+            "linkedinUrl": linkedInUrl,
+            "aboutMe": aboutMe,
+            "email":email,
+            "paintingType" : paintingList,
+            "colorName":color
+        }
+        console.log("calling update");
+        console.log(data);
+        data = JSON.stringify(data);
+    
+        $.ajax({
+            url:  `${baseUrl}/api/artist-profile/basic-info/${email}` ,
+            type: "PUT",
+            crossDomain: true,
+            data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization','Bearer '+ token);
+            },
+            headers: {
+                "Content-Type": "application/json",
+            },
+            'async': false,
+            success: function (response) {
+                
+                $('#msg').show();
+                swal("data  updated");          
+            },
+            error: function( error) {
+            }             
+        });
+    }
+    
 
 }
 
@@ -260,7 +292,13 @@ function getLoggedArtistProfile(token,username){
         },
         'async': false,
         success: function (response) {
-            window.localStorage.setItem("ARTIST",response);  
+            if(response){
+
+                window.localStorage.setItem("ARTIST",response);  
+                console.log(response);
+                var existingArtist = window.localStorage.getItem("ARTIST");
+                showProfilePic(token);    
+            }  
         },
         error: function( ) {
             console.log(error);
@@ -283,8 +321,8 @@ function deleteProfile(token){
         success: function (response) {
               if(response!=null){  
                 $('#profileImage').attr("src","./assets/images/default-profile-pic.png");
-                // $('#updateImage').hide();
-                // $('#saveImage').show();
+                $('#updateImage').hide();
+                $('#saveImage').show();
               }
         },
         error: function( ) {
@@ -299,15 +337,43 @@ function redirectArtistPublicProfile(){
 }
 
 // this is used for validation the form
-function validate(){
+function validate(type){
     
     // var fname = $('#fname').val();
     var profileNameVal = $('#profileName').val();
     var colorVal = $('#bgcol :selected').val();
+
+    var fbUrl = $("#fbUrl").val();
+    var twitterUrl = $('#twitterUrl').val();
+    var linkedInUrl = $('#linkedInUrl').val();
+
+    if(type=="save"){
+
+        if(  isEmpty("Profile Name", profileNameVal) && isEmpty("color", colorVal) ) {          
+        
+            if(isURLvalid("Facebook",fbUrl) && isURLvalid("twitter",twitterUrl) 
+                && isURLvalid("LinkedIn",linkedInUrl)){
+                    return true;
+                }else{
+                    return false;
+                }
+        
+        } else return false;
+    }else{
+
+        if(isEmpty("color", colorVal) ) {         
+       
+            if(isURLvalid("Facebook",fbUrl) && isURLvalid("twitter",twitterUrl) 
+            && isURLvalid("LinkedIn",linkedInUrl)){
+                return true;
+            }else{
+                return false;
+            }
+       
+        } else return false;
+    }
     
-    if(  isEmpty("Profile Name", profileNameVal) && isEmpty("color", colorVal) ) {
-        return true;
-    } else return false;
+   
 }
 
 // check for empty
@@ -316,7 +382,7 @@ function isEmpty(field, data){
     var error = "";
    
     if (data === ''|| data === null || data === undefined || data === "Select") {
-        console.log(data);
+        
         error = "You didn't enter "+field+".";
         if(field=="Profile Name"){
             $('#profileNameError').show();
@@ -335,4 +401,50 @@ function isEmpty(field, data){
 
 function hideError(){
     $('#profileNameError').hide();
+    $('#profilePicShowError').hide();
+}
+
+function isURLvalid(field,data){
+
+    var facebookUrlPattern = /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i;
+    var twitterUrlPattern = /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i;
+    var linkedinUrlPattern = /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i;
+
+    var error = "";
+
+    if(field=="LinkedIn"){
+       
+        if (data === ''|| data === null || data === undefined)return true;
+        if(data.match(linkedinUrlPattern)){
+            return true;
+        }else{
+            error = "you entered wrong"+field+"!!";
+            $('#lError').show;
+            $('#lError').text(error);
+            return false;
+        }  
+    }else if(field=="Facebook"){
+        if (data === ''|| data === null || data === undefined)return true;
+        if(data.match(facebookUrlPattern)){
+            console.log(data);
+            return  true;
+        }else{
+            error = "You entered wrong"+field+"!!";
+            $('#fbError').show;
+            $('#fbError').text(error);
+            return false;
+        }
+    }else if(field=="twitter"){
+        if (data === ''|| data === null || data === undefined)return true;
+        if(data.match(twitterUrlPattern)){
+            console.log("inside twitter url");
+           return true;
+        }else{
+            console.log(data);
+            error = "You entered wrong"+field+"!!";
+            $('#tError').show;
+            $('#tError').text(error);
+            return false;
+        }
+    }
 }

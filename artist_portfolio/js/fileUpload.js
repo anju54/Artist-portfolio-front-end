@@ -1,6 +1,8 @@
 //This is used for uplaoding the profile pic
  function uploadProfilePic(token,file){
 
+    $('#profilePicShowError').text('');
+   // hideLoader();
     showLoader();
     if(file!=null){
 
@@ -24,8 +26,11 @@
             },
             error: function(error) {
                 $('#profilePicShowError').text(error.responseJSON.message);
+                
             },
             complete: function(){
+        
+                $('#file').val('');
                 hideLoader();
             }         
         });

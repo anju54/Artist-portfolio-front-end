@@ -107,7 +107,7 @@
                                 <div class="col-md-10">
                                     <input type="file" name="file" id="file" />
                                     <p class="help-block">
-                                        Allowed formats: jpeg, jpg, gif, png
+                                        Allowed formats: jpeg, jpg, png
                                     </p> 
                                 </div>
                         
@@ -179,16 +179,19 @@
                             <label class="col-md-12">Facebook url</label>
                             <div class="col-md-12">
                                 <input type="text" id="fbUrl" class="form-control form-control-line">
+                                <p id="fbError"></p>
                             </div>
                             <br>
                             <label class="col-md-12">Twitter url</label>
                             <div class="col-md-12">
                                 <input type="text" id="twitterUrl" class="form-control form-control-line">
+                                <p id="tError"></p>
                             </div>
                             <br>
                             <label class="col-md-12">LinkedIn url</label>
                             <div class="col-md-12">
                                 <input type="text" id="linkedInUrl" class="form-control form-control-line">
+                                <p id="lError"></p>
                             </div>
 
                             <label class="col-md-12">Background colour*</label>
@@ -209,7 +212,7 @@
                                     <div class="multiselect">
                                         <div class="selectBox" onclick="showCheckboxes()">
                                             <select class="form-control form-control-line">
-                                                <option>Select an option</option>
+                                                <option id="optionPaintingType">Select an option</option>
                                             </select>
                                             <div class="overSelect"></div>
                                         </div>

@@ -37,7 +37,7 @@ function setPassword(data,id,token){
         },
         success: function (response) {
             $('#successMsg').show();
-            $('#successMsg').text("new password has been created!! now you can login.")
+            $('#successMsg').text("New password has been created!! now you can login.")
             location.href=('./signin.html')            
         }
             

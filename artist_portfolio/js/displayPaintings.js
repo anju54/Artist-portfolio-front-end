@@ -201,7 +201,7 @@ function deletePainting(token,id){
             $('#imgDiv').empty();
             for(var i=0; i<paintingList.length; i++){
                 if(paintingList[i].media.id == id){
-                    console.log('ggggg');
+                    // console.log('ggggg');
                     paintingList.splice(i,1);
                 }
             }
