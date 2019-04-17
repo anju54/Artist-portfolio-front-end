@@ -199,25 +199,42 @@ function saveProfileData(token){
             },
             'async': false,
             success: function (response) {
-                console.log("printing artist id"+response);
+                
                 window.localStorage.setItem("ARTIST",response);  
                 swal("data saved successfully!!");  
                 getLoggedArtistProfile(token);    
                 showProfilePic(token) ;
                 $("#saveImage").show();
+                //getArtistProfileData(token);
             },
             error: function( error) {
-                console.log(error.responseJSON.message);
-                $('#profileNameError').show();
-                $('#profileNameError').text(error.responseJSON.message)
-            } ,  
+
+                var errorMsg = error.responseJSON.message;
+
+                if(errorMsg.includes("Profile")){
+                    $('#profileNameError').show();
+                    $('#profileNameError').text(error.responseJSON.message)
+                }if(errorMsg.includes("Facebook")){
+                    $('#fbError').show();
+                    $('#fbError').text(errorMsg);
+                }else if(errorMsg.includes("Twitter")){
+                    $('#tError').show();
+                    $('#tError').text(errorMsg);
+                }else if(errorMsg.includes("LinkdIn")){
+                    $('#lError').show();
+                    $('#lError').text(errorMsg);
+                }
+                else{
+                    $('#msg').show();
+                    $('#msg').text(errorMsg);
+                }
+            },  
             complete: function () {
                 
                 hideLoader();
             }            
         });
-    }
-    
+    }  
 }
 
 // This is used to save artist profile data
@@ -275,9 +292,23 @@ function updateProfile(token){
                 swal("data  updated");          
             },
             error: function(error) {
-                $('#msg').show();
-                $('#msg').text(error.responseJSON.message);
-                console.log(error.responseJSON.message);
+                var err = error.responseJSON.message;
+                if(err.includes("Facebook")){
+                    $('#fbError').show();
+                    $('#fbError').text(err);
+                }else if(err.includes("Twitter")){
+                    $('#tError').show();
+                    $('#tError').text(err);
+                }else if(err.includes("linkdIn")){
+                    $('#lError').show();
+                    $('#lError').text(err);
+                }
+                else{
+                    $('#msg').show();
+                    $('#msg').text(error.responseJSON.message);
+                    console.log(error.responseJSON.message);
+                }
+                
             }             
         });
     }
@@ -425,12 +456,22 @@ function hideLError(){
     $('#lError').text('');
 }
 
+function hideMainError(){
+    $('#msg').hide();
+}
+
+function hideColorError(){
+    $('#colorError').hide();
+}
+
 function isURLvalid(field,data){
     
-    var facebookUrlPattern = /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i;
-    var twitterUrlPattern = /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i;
-    var linkedinUrlPattern = /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i;
-
+    var facebookUrlPattern =/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i;
+    var twitterUrlPattern = /^(https?:\/\/)?((w{3}\.)?)twitter\.com\/(#!\/)?[a-z0-9_]+$/i;
+    var linkedinUrlPattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    
+    // /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i;
+    
     var error = "";
 
     if(field=="LinkedIn"){
@@ -439,7 +480,7 @@ function isURLvalid(field,data){
         if(data.match(linkedinUrlPattern)){
             return true;
         }else{
-            error = "you entered wrong"+field+"!!";
+            error = "you entered wrong "+field+" URL!!";
             $('#lError').show;
             $('#lError').text(error);
             return false;
@@ -450,7 +491,7 @@ function isURLvalid(field,data){
            
             return  true;
         }else{
-            error = "You entered wrong"+field+"!!";
+            error = "You entered wrong "+field+" URL!!";
             $('#fbError').show;
             $('#fbError').text(error);
             return false;
@@ -462,7 +503,7 @@ function isURLvalid(field,data){
            return true;
         }else{
             console.log(data);
-            error = "You entered wrong"+field+"!!";
+            error = "You entered wrong "+field+" URL!! ";
             $('#tError').show;
             $('#tError').text(error);
             return false;

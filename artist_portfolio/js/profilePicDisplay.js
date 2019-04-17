@@ -18,7 +18,8 @@ function showProfilePic(token){
                 
                 setProfilePic(response);  
                 $('#updateImage').show(); 
-                $('#saveImage').hide();  
+                $('#saveImage').hide(); 
+                $('#deleteImage').show(); 
             }else{
                 $('#saveImage').show(); 
                 $('#deleteImage').hide();

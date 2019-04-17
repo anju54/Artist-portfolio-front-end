@@ -132,10 +132,12 @@
                                     Delete image
                                 </button>
                             </div>
+                            
                             <div class="col-sm-6">
                                 <p id="profilePicShowError"></p>
                             </div>
                         </center>
+                        
                     </div>
                 </div>
             </div>
@@ -196,7 +198,7 @@
 
                             <label class="col-md-12">Background colour*</label>
                             <div class="col-md-12">
-                                <select type="text" id="bgcol" name="color" class="form-control form-control-line">
+                                <select type="text" id="bgcol" name="color" class="form-control form-control-line" onclick="hideColorError()">
                                     <option>Select</option>
                                     <!-- <option>red</option>
                                     <option>yellow</option> -->
@@ -226,7 +228,8 @@
 
                             <label class="col-md-12">About Me</label>
                             <div class="col-md-12">
-                                <textarea rows="5" id="aboutMe" placeholder="max 255 chars" class="form-control form-control-line"></textarea>
+                                <textarea rows="5" id="aboutMe" placeholder="max 255 chars" onclick="hideMainError()"
+                                class="form-control form-control-line"></textarea>
                             </div>
 
                             <div class="col-sm-4">

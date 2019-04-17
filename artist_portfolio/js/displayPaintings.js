@@ -17,7 +17,7 @@ $(document).ready(function() {
 });
 
 function bindEvent(){
-
+console.log("inside bind event");
     var token = window.localStorage.getItem("TOKEN");
     $('#imgDiv img').click(function(){
         var source = $(this).attr('src');
@@ -86,7 +86,7 @@ function showPaintings(token){
             }
              
             counter++; 
-            bindEvent();          
+            //bindEvent();          
         },
         error: function( error) {
             
@@ -140,7 +140,7 @@ function imagePreview(source){
     var div = '<div class="container" id="prev"><img style="max-height:500px;" id="prev-img" src="'+source+'"/>'+
     '<span style=color: white;><button id="closePrev" class="btn btn-primary" onClick="closePreview();">Close</button></span></div>';
     $('#over').append(div);
-   
+   console.log(source);
 }
 
 // This is used for closing the preview option

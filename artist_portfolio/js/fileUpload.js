@@ -32,6 +32,7 @@
             complete: function(){
         
                 $('#file').val('');
+                $('#profilePicShowError').text('');
                 hideLoader();
             }         
         });
