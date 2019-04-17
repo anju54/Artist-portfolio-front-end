@@ -143,8 +143,9 @@ function setProfileData(response){
         res += "...."; 
         $('#optionPaintingType').text(res);
     }else{
-        var indexVal = list.indexOf(",");
-        var result = list.substr(0,indexVal);
+        var length = list.length;
+        //var indexVal = list.indexOf(",");
+        var result = list.substr(0,length-1);
         $('#optionPaintingType').text(result);
     }
     
@@ -153,7 +154,7 @@ function setProfileData(response){
 // This is used to save artist profile data 
 function saveProfileData(token){
 
-    console.log("inside save profile data");
+   $('#msg').text('');
 
     var email = window.localStorage.getItem("USERNAME");
     var fbUrl = $("#fbUrl").val();
@@ -222,6 +223,7 @@ function saveProfileData(token){
 // This is used to save artist profile data
 function updateProfile(token){
 
+    $('#msg').text('');
     var email = window.localStorage.getItem("USERNAME");
     var fbUrl = $("#fbUrl").val();
     var twitterUrl = $('#twitterUrl').val();
@@ -272,7 +274,10 @@ function updateProfile(token){
                 $('#msg').show();
                 swal("data  updated");          
             },
-            error: function( error) {
+            error: function(error) {
+                $('#msg').show();
+                $('#msg').text(error.responseJSON.message);
+                console.log(error.responseJSON.message);
             }             
         });
     }
@@ -327,6 +332,7 @@ function deleteProfile(token){
                 $('#profileImage').attr("src","./assets/images/default-profile-pic.png");
                 $('#updateImage').hide();
                 $('#saveImage').show();
+                $('#deleteImage').hide();
               }
         },
         error: function( ) {
@@ -373,7 +379,6 @@ function validate(type){
             }else{
                 return false;
             }
-       
         } else return false;
     }
     
@@ -408,8 +413,20 @@ function hideError(){
     $('#profilePicShowError').hide();
 }
 
-function isURLvalid(field,data){
+function hidefbError(){
+    $('#fbError').text('');
+}
 
+function hideTError(){
+    $('#tError').text('');
+}
+
+function hideLError(){
+    $('#lError').text('');
+}
+
+function isURLvalid(field,data){
+    
     var facebookUrlPattern = /^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i;
     var twitterUrlPattern = /^(https?:\/\/)?((w{3}\.)?)twitter.com\/.*/i;
     var linkedinUrlPattern = /^(https?:\/\/)?((w{3}\.)?)linkedin.com\/.*/i;
@@ -430,7 +447,7 @@ function isURLvalid(field,data){
     }else if(field=="Facebook"){
         if (data === ''|| data === null || data === undefined)return true;
         if(data.match(facebookUrlPattern)){
-            console.log(data);
+           
             return  true;
         }else{
             error = "You entered wrong"+field+"!!";
@@ -441,7 +458,7 @@ function isURLvalid(field,data){
     }else if(field=="twitter"){
         if (data === ''|| data === null || data === undefined)return true;
         if(data.match(twitterUrlPattern)){
-            console.log("inside twitter url");
+           
            return true;
         }else{
             console.log(data);

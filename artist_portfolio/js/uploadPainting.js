@@ -17,6 +17,7 @@ $(document).ready(function() {
  //This is used for making ajax call for uploading painting
  function uploadPaintings(token,file){
 
+    $('#imageUploadError').text('');
     showLoader();
     $.ajax({
 

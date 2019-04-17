@@ -69,7 +69,7 @@ function showPaintings(token){
             "Content-Type": "application/json",
         },
         success: function (response) {
-            console.log(response);
+            
             if(response.length){
                for(var i=0; i<response.length; i++){
                    if(JSON.stringify(paintingList).indexOf(JSON.stringify(response[i])) === -1){
@@ -98,6 +98,7 @@ function showPaintings(token){
 
 // This is used to create img tag for displaying painting
 function setAllPaintings(response){
+
     console.log('called');
     for(var i=0; i<response.length;i++){
 
@@ -124,6 +125,7 @@ function setAllPaintings(response){
             $('#'+response[i].media.id+'_isPublic').prop('checked',true);
         } else $('#'+response[i].media.id+'_isPublic').prop('checked',false);
     }
+    //bindEvent();
 }
 
 // This is used to preview when user hover the image to see the full image

@@ -20,6 +20,8 @@ function showProfilePic(token){
                 $('#updateImage').show(); 
                 $('#saveImage').hide();  
             }else{
+                $('#saveImage').show(); 
+                $('#deleteImage').hide();
                 $('#updateImage').hide();
             }          
         },
