@@ -26,7 +26,8 @@ function showPublicPaintings(id){
                 setAllPaintings(response); 
                 $('#loadMore').show(); 
             } else if(counter == 0){
-               swal("There are No paintings!");
+                $('#warningMsg').text("Opps! Artist has not uploaded any Painting Yet!!");
+            //    swal("There are No paintings!");
             } else{
                 swal('There are no more paintings')
                 $('#loadMore').hide();
