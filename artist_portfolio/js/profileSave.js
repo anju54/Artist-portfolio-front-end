@@ -2,7 +2,8 @@ $(document).ready(function() {
    
     $('#update').hide(); 
     $("#saveImage").hide();
-   
+    $('#updateImage').hide();
+
     var token = window.localStorage.getItem("TOKEN");
     var username = window.localStorage.getItem("USERNAME");
     
@@ -17,8 +18,6 @@ $(document).ready(function() {
     $("#update").click(function() {
         updateProfile(token);
     });
-
-    $('#updateImage').hide();
 
     $("#updateImage").click(function(event) {
 
@@ -97,7 +96,7 @@ function getArtistProfileData(token){
                 $('#save').hide();
                 $('#update').show();
                 
-                $('#deleteImage').show();
+                //$('#deleteImage').show();
             }             
         },
         error: function( error) {
@@ -205,7 +204,7 @@ function saveProfileData(token){
                 getLoggedArtistProfile(token);    
                 showProfilePic(token) ;
                 $("#saveImage").show();
-                //getArtistProfileData(token);
+                getArtistProfileData(token);
             },
             error: function( error) {
 
