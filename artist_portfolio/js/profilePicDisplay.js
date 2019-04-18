@@ -27,7 +27,7 @@ function showProfilePic(token){
             }          
         },
         error: function( error) {
-            console.log(error);
+            
             $('#profilePicShowError').text(error.responseJSON.message);
         }             
     });
@@ -37,13 +37,12 @@ function showProfilePic(token){
 function setProfilePic(response){
    
     path = baseUrl + response.path + response.fileName;
-    console.log(path);
     $('#profileImage').attr("src",path);
 }
 
 //This is used for making ajax call for updating the profile pic
 function updateProfilePic(token,file){
-    console.log(file.length);
+    
     if(file!=null){
 
         $.ajax({

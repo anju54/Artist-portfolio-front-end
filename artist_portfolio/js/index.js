@@ -28,7 +28,7 @@ function showAllProfilePics(){
             "Content-Type": "application/json",
         },
         success: function (response) {
-            console.log(response);
+            
             if(response.length){
                 $('#selecArtistHeader').show();
                 setAllProfile(response);
@@ -37,20 +37,15 @@ function showAllProfilePics(){
                 swal("There are No paintings!");
                 $('#loadMore').hide();
             }
-             else{
+            else{
                 swal('There are no more Artist!!')
                 $('#loadMore').hide();
-            //     $("#selecArtistHeader").hide();
-             }
-             
+            }
             counter++;           
         },
         error: function( error) {
-            console.log(error);
-        }   ,
-        complete: function(){
-            
-            
+        },
+        complete: function(){   
         }          
     });
 }

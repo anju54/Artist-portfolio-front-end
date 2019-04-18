@@ -38,7 +38,6 @@ $(document).ready(function() {
    
     var id = window.localStorage.getItem("ARTIST");
     if(id==0){
-        console.log("calling getLoggedArtistProfile if ARTIST is 0")
         getLoggedArtistProfile(token,username);  
     }
     
@@ -100,7 +99,7 @@ function getArtistProfileData(token){
             }             
         },
         error: function( error) {
-            console.log(error);
+            
             swal(error.responseJSON.message)
         }             
     });
@@ -125,16 +124,14 @@ function setProfileData(response){
     $('#email').text(response.email);
     $('#bgcol').val(response.colorName);
     var paintingTypeList = response.paintingType;
-    //console.log(paintingTypeList);
 
     var list = "" ;
     for(var i=0; i<paintingTypeList.length;i++){
 
         var res = paintingTypeList[i].id+"_paintingType";        
-       $('#'+res).prop("checked",true);
-
+        $('#'+res).prop("checked",true);
         list += paintingTypeList[i].paintingName + ",";
-        console.log(list);
+       
     }
     if(list.length > 50){
         
@@ -182,7 +179,7 @@ function saveProfileData(token){
             "paintingType" : paintingList,
             "colorName": color
         }
-    console.log(data);
+    
         data = JSON.stringify(data);
         showLoader();
         $.ajax({
@@ -269,8 +266,7 @@ function updateProfile(token){
             "paintingType" : paintingList,
             "colorName":color
         }
-        console.log("calling update");
-        console.log(data);
+        
         data = JSON.stringify(data);
     
         $.ajax({
@@ -305,7 +301,7 @@ function updateProfile(token){
                 else{
                     $('#msg').show();
                     $('#msg').text(error.responseJSON.message);
-                    console.log(error.responseJSON.message);
+                    
                 }
                 
             }             
@@ -334,13 +330,12 @@ function getLoggedArtistProfile(token,username){
             if(response){
 
                 window.localStorage.setItem("ARTIST",response);  
-                console.log(response);
                 var existingArtist = window.localStorage.getItem("ARTIST");
                 showProfilePic(token);    
             }  
         },
         error: function( ) {
-            console.log(error);
+           
         }         
     });
 }
@@ -486,8 +481,8 @@ function isURLvalid(field,data){
         }  
     }else if(field=="Facebook"){
         if (data === ''|| data === null || data === undefined)return true;
+
         if(data.match(facebookUrlPattern)){
-           
             return  true;
         }else{
             error = "You entered wrong "+field+" URL!!";
@@ -497,11 +492,10 @@ function isURLvalid(field,data){
         }
     }else if(field=="twitter"){
         if (data === ''|| data === null || data === undefined)return true;
+
         if(data.match(twitterUrlPattern)){
-           
            return true;
         }else{
-            console.log(data);
             error = "You entered wrong "+field+" URL!! ";
             $('#tError').show;
             $('#tError').text(error);

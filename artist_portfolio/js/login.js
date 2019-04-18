@@ -37,9 +37,7 @@ function login(){
                 "Content-Type": "application/json",
             },
             success: function (response) {
-                console.log(response);
-                console.log(response.token);
-                //setCookie('TOKEN', response.token, 1);      
+      
                 window.localStorage.setItem("TOKEN",response.token);       
                 getUserDetail(response.token);          
             },
@@ -87,7 +85,7 @@ function setCookie(cname, cvalue, exdays) {
     var expires = "expires=" + d.toUTCString();
     
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    console.log(cvalue);
+    
 }
 
 // This is used to get cookie value

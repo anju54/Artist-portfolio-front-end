@@ -18,7 +18,6 @@ function getAllColors(token){
             populateColorsList(response);             
         },
         error: function( error) {
-            console.log(error);
         }             
     });
 }

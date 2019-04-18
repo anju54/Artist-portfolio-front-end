@@ -17,7 +17,7 @@ function getAllPaintingType(token){
             populatePaintingTypeList(response);             
         },
         error: function( error) {
-            console.log(error);
+           
         }             
     });
 }
@@ -30,14 +30,7 @@ function populatePaintingTypeList(response){
                   '<input name="paintingList" type="checkbox" id="'+response[i].id+"_paintingType"+ '"value="' +response[i].paintingName+ '" />' 
                   +response[i].paintingName+ '</label>';
         $("#checkboxes").append(listRow);
-        // list += response[i].paintingName + " ";
-        // console.log(list);
     }
-    // if(list.length > 30){
-    // 	list.substr(0,30);
-    // 	list += "...."; 
-    // }
-    // $('#optionPaintingType').text(list);
 }
 
 var expanded = false;

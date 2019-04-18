@@ -96,7 +96,6 @@ function validatePassword(password) {
 function isEmpty(field, data){
 
     var error = "";
-    console.log(data);
     if (data === ''|| data === null || data === undefined) {
         $('#error').show();
         error = "You didn't enter "+field+".";

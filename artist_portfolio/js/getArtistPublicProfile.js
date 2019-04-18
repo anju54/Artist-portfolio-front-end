@@ -21,7 +21,7 @@ function getArtistProfileInfo(id){
             "Content-Type": "application/json",
         },
         success: function (response) {
-            console.log(response);
+            
             setData(response);    
         },
         error: function( ) {
@@ -65,11 +65,11 @@ function getPublicProfilePic(id){
             "Content-Type": "application/json",
         },
         success: function (response) {
-            console.log(response);
+            
             if(response){
                 var path = baseUrl + response.path + response.fileName ;
                 $('#profilePic').attr("src",path);
-                console.log(path);  
+                 
             } else{
                 var staticPath = "./assets/images/default-profile-pic.png";
                 $('#profilePic').attr("src",staticPath);

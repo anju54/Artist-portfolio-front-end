@@ -17,7 +17,7 @@ function validate(){
 
 // check for password
 function validatePassword(password) {
-    console.log(password);
+    
     var error = "";
     if(!isEmpty("Password", password)){
 
@@ -25,7 +25,7 @@ function validatePassword(password) {
     }
     var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     if(password.match(passw)) { 
-        console.log('matched');
+        
         return true;
     } else{ 
         $('#passwordError')('Wrong password ...!  it should contain 6 to 20 characters which contain at'+ 

@@ -89,8 +89,6 @@ function showPaintings(token){
             //bindEvent();          
         },
         error: function( error) {
-            
-            console.log(error);
         }             
     });
      
@@ -99,7 +97,6 @@ function showPaintings(token){
 // This is used to create img tag for displaying painting
 function setAllPaintings(response){
 
-    console.log('called');
     for(var i=0; i<response.length;i++){
 
 		var divid; 
@@ -140,7 +137,6 @@ function imagePreview(source){
     var div = '<div class="container" id="prev"><img style="max-height:500px;" id="prev-img" src="'+source+'"/>'+
     '<span style=color: white;><button id="closePrev" class="btn btn-primary" onClick="closePreview();">Close</button></span></div>';
     $('#over').append(div);
-   console.log(source);
 }
 
 // This is used for closing the preview option
@@ -173,18 +169,16 @@ function setPublicOrprivate(token, id){
         headers: {
             "Content-Type": "application/json",
         },
-        success: function (response) {
-            console.log(response);
-                 
+        success: function (response) {     
         },
         error: function( error) {
-            console.log(error);
         }             
     });
 }
 
 // This is used to delete the painting
 function deletePainting(token,id){
+
     $.ajax({
         url:  `${baseUrl}/api/media/${id}` ,
         type: "DELETE",
@@ -195,21 +189,21 @@ function deletePainting(token,id){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            //console.log(response);     
+              
         },
         error: function( ) {
-        }  ,
+        },
         complete: function () {
+
             $('#imgDiv').empty();
             for(var i=0; i<paintingList.length; i++){
                 if(paintingList[i].media.id == id){
-                    // console.log('ggggg');
+                    
                     paintingList.splice(i,1);
                 }
             }
-             setAllPaintings(paintingList);
-             bindEvent();
-           
+            setAllPaintings(paintingList);
+            bindEvent();
         }         
     });
 }

@@ -22,7 +22,7 @@ function showPublicPaintings(id){
         },
         success: function (response) {
             if(response.mediaList.length){
-                console.log(response);
+                
                 setAllPaintings(response); 
                 $('#loadMore').show(); 
             } else if(counter == 0){
@@ -35,10 +35,8 @@ function showPublicPaintings(id){
             counter++;            
         },
         error: function( error) {
-            console.log(error);
         }   ,
-        complete: function () {
-                
+        complete: function () {     
             bindCall();
         }           
     });
