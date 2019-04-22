@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#selecArtistHeader').hide();
     
     tokenExists(token);
-    getUserDetail(token);
+    
     showAllProfilePics();   
    
     $('#loadMore').click(function () {
@@ -34,7 +34,8 @@ function showAllProfilePics(){
                 setAllProfile(response);
                 $('#loadMore').show(); 
             } else if(counter == 0){
-                swal("There are No paintings!");
+                //swal("There are No Artist!");
+                //$('#noArtist').text("There are No Artist!");
                 $('#loadMore').hide();
             }
             else{
@@ -83,6 +84,7 @@ function tokenExists(token){
        
         $('#sideBar').show();
         $('#signinButton').hide();
+        getUserDetail(token);
         // var username = window.localStorage.getItem("USERNAME");  
         // window.location.href = './profile.html?email='+username+'&val=edit' ;
     }else{
