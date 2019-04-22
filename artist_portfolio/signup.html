@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-
+    <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
@@ -31,7 +31,15 @@
                 <br>
 
                 <form class="col-lg-12 ">
+                    
                     <div class="input-group" style="width: 340px; text-align: center; margin: 0 auto;">
+                            <div class="form-group">
+                                    <label class="userType">Sign up as:</label>
+                                    <input type="radio" name="userType"  id="student" value="ARTIST">ARTIST</input>
+                                    <input type="radio"  name="userType" id="teacher" value="ORG_ADMIN" >ORGANIZER</input>
+                                    
+                                   
+                                </div>
                         <input class="form-control input-lg" title="Confidential signup."
                             placeholder="Enter your first Name" type="text" id="fname" onclick="hideFnameFunction()">
                         <p id="fnameError"></p>

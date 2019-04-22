@@ -5,7 +5,8 @@ $(document).ready(function() {
     if( !(token == null)){
 
         var username = window.localStorage.getItem("USERNAME");  
-        window.location.href = './profile.html?email='+username+'&val=edit' ;
+        getUserDetail(token);
+        //window.location.href = './profile.html?email='+username+'&val=edit' ;
     }
 
     $("#loginBtn").click(function() {
@@ -63,19 +64,24 @@ function getUserDetail(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            //setCookie('USER', response, 1); 
-            redirectPage(response.username);  
-    
+            
+            redirectPage(response);
         },
         error: function( ) {
         }         
     });
 }
 
-function redirectPage(username){
+function redirectPage(response){
     
-    window.localStorage.setItem('USERNAME',username);  
-    window.location.href = './profile.html?email='+username+'&val=edit' ;
+    window.localStorage.setItem('USERNAME',response.username);  
+console.log(response.userType);
+    if(response.userType=='ARTIST'){
+        window.location.href = './profile.html?email='+response.username+'&val=edit' ;
+    }else if(response.userType=='ORG_ADMIN'){
+        window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
+    }
+    
 }
 
 // used to set  cookie

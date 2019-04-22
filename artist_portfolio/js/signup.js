@@ -11,9 +11,10 @@ function registration(){
     var emailVal = $('#email').val();
     var fNameVal = $('#fname').val().replace(/[^a-zA-Z0-9]/g, '');
     var lNameVal = $('#lname').val().replace(/[^a-zA-Z0-9]/g, '');
-    //var usertypeVAl = $("input[name='userType']:checked").val();
+    var usertypeVAl = $("input[name='userType']:checked").val();
 
-    var usertypeVAl = 'ARTIST';
+    console.log(usertypeVAl);
+    //var usertypeVAl = 'ARTIST';
 
     if(validate()){
 
