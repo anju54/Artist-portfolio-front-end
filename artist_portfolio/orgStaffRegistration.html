@@ -5,13 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-
+    <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/showCurretUser.js"></script>
+    <script type="text/javascript" src="js/OrgStaff.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
 
       <style>
 
@@ -38,7 +42,7 @@
                 <ul class="nav navbar-nav side-nav">
                     <li><a href="index.html"><i class="fa fa-bullseye"></i> Index </a></li>
                     <li><a href="#"><i class="fa fa-tasks"></i> Dashboard</a></li>
-                    <!-- <li><a href="signup.html"><i class="fa fa-list-ol"></i> SignUp</a></li> -->
+                    <li><a href="orgAdminProfile.html"><i class="fa fa-tasks"></i>My Profile</a></li>
                     <!-- <li class="selected"><a href="register.html"><i class="fa fa-font"></i> Register</a></li> -->
 
                 </ul>
@@ -64,7 +68,7 @@
                         </ul>
                     </li>
                      <li class="dropdown user-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><span id="fullName"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
                             
@@ -96,7 +100,7 @@
                 First Name:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="firstName" placeholder="First Name">    
+                <input type="text" class="form-control" id="staffFirstName" placeholder="First Name">    
             </div>   
             
         </div>
@@ -106,7 +110,7 @@
                 Last Name:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="lastName" placeholder="Last Name">    
+                <input type="text" class="form-control" id="stafflastName" placeholder="Last Name">    
             </div>   
         </div>
 

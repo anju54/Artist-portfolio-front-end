@@ -5,13 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-
+    <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/showCurretUser.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
+    <script type="text/javascript" src="js/organization.js"></script>
+    <script type="text/javascript" src="js/organizer.js"></script>
 
       <style>
 
@@ -36,9 +41,9 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li><a href="index.html"><i class="fa fa-bullseye"></i> Index </a></li>
-                    <li><a href="#"><i class="fa fa-tasks"></i> Dashboard</a></li>
-                    <!-- <li><a href="signup.html"><i class="fa fa-list-ol"></i> SignUp</a></li> -->
+                    <li><a href="index.html"><i class="fa fa-bullseye"></i> Dasboard </a></li>
+                    
+                    <li><a href="orgAdminProfile.html"><i class="fa fa-tasks"></i>My Profile</a></li>
                     <!-- <li class="selected"><a href="register.html"><i class="fa fa-font"></i> Register</a></li> -->
 
                 </ul>
@@ -64,7 +69,7 @@
                         </ul>
                     </li>
                      <li class="dropdown user-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><span id="fullName"> </span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
                             
@@ -96,7 +101,7 @@
                 Organization website:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="firstName" placeholder="Enter organization website">    
+                <input type="text" class="form-control" id="website" placeholder="Enter organization website">    
             </div>   
             
         </div>
@@ -106,7 +111,7 @@
                 Organization Contact number:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="lastName" placeholder="Enter contact number">    
+                <input type="text" class="form-control" id="contactNo" placeholder="Enter contact number">    
             </div>   
         </div>
 
@@ -115,47 +120,27 @@
                Organization address:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="email" placeholder="Enter address">   
+                <input type="text" class="form-control" id="address" placeholder="Enter address">   
                 <p>Allowed domains are:<span id="domain"></span></p> 
             </div>   
            
         </div>
        
-        <!-- <div>
-            <label for="country" class="col-md-2">
-                Country:
-            </label>
-            <div class="col-md-9">
-                <select name="country" id="country" class="form-control">
-                    <option>--Please Select--</option>
-                    <option>India</option>
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>United Kingdom</option>
-                    <option>Others</option>
-                </select>
-            </div>
-        </div> -->
-        <!-- <div>
-            <label for="uploadimage" class="col-md-2">
-                Upload Image:
-            </label>
-            <div class="col-md-10">
-                <input type="file" name="uploadimage" id="uploadimage">
-                <p class="help-block">
-                    Allowed formats: jpeg, jpg, gif, png
-                </p>
-            </div>
-        </div> -->
+        
         
         <div class="row">
             <div class="col-md-2">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <button type="submit" class="btn btn-info" id="regOrgStaff">
                     Register
                 </button>
             </div>
+            <div class="col-md-5" style="float:right">
+                    <button type="submit" class="btn btn-info" id="regOrgStaff">
+                        Update
+                    </button>
+                </div>
         </div>
     </div>
     </div>
