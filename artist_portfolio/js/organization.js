@@ -3,10 +3,10 @@ $(document).ready(function() {
     var token = window.localStorage.getItem("TOKEN");
     getOrganizerId(token);
     getOrganizationByOrganizerId(token);
-    if(token){
-        
+
+    $('#regOrg').click(function(){
         addOrganizer(token);
-    }
+    });
 });
 
 function addOrganizer(token){
