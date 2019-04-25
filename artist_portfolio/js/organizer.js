@@ -4,7 +4,7 @@ $(document).ready(function() {
     if(token){
         
         getOrganizerId(token);
-        getOrganizationByOrganizerId(token);
+        
     }
 });
 
@@ -27,6 +27,7 @@ function getOrganizationByOrganizerId(token){
         success: function (response) {
             if(response!=null){
                 console.log(response);
+                setOrganizationData(response);
             }             
         },
         error: function( error) {
@@ -34,6 +35,15 @@ function getOrganizationByOrganizerId(token){
         }             
     });
     
+}
+
+function setOrganizationData(response){
+
+    $('#orgName').val(response.organizationName);
+    $('#website').val(response.organizationWebsite);
+    $('#conatctNo').val(response.contactNumber);
+    $('#address').val(response.organizationAddress);
+
 }
 
 //This method is used to get organizer id
