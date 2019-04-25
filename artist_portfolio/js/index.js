@@ -1,12 +1,20 @@
 var counter = 0;
+
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
     
     $('#sideBar').hide();
     $('#selecArtistHeader').hide();
-    
-    tokenExists(token);
+   
+    if(token){
+       console.log(token);
+        $('#sideBar').show();
+        $('#signinButton').hide();
+        getUserDetails(token);
+    }else{
+       // $('#sideBar').hide();
+    }
     
     showAllProfilePics();   
    
@@ -78,16 +86,37 @@ function setAllProfile(response){
     }    
 }
 
-function tokenExists(token){
+function getUserDetails(token){
 
-    if(token){
-       
-        $('#sideBar').show();
-        $('#signinButton').hide();
-        getUserDetail(token);
-        // var username = window.localStorage.getItem("USERNAME");  
-        // window.location.href = './profile.html?email='+username+'&val=edit' ;
-    }else{
-       // $('#sideBar').hide();
+    $.ajax({
+        url:  `${baseUrl}/api/artist/username` ,
+        type: "GET",
+        crossDomain: true,
+        data: {},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+        },
+        success: function (response) {
+            
+            redirectpage(response);
+            console.log(response);
+        },
+        error: function( ) {
+        }         
+    });
+}
+
+function redirectpage(response){
+    
+    window.localStorage.setItem('USERNAME',response.username);  
+
+    if(response.userType=='ROLE_ARTIST'){
+        
+        $('#redirectBtn').attr("href",'./profile.html?email='+response.username+'&val=edit');
+        //window.location.href = './profile.html?email='+response.username+'&val=edit' ;
+    }else if(response.userType=='ROLE_ORGADMIN'){
+        $('#redirectBtn').attr("href",'./orgAdminProfile.html?email='+response.username+'&val=edit');
+        //window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
     }
+    
 }

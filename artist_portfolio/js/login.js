@@ -4,8 +4,14 @@ $(document).ready(function() {
 
     if( !(token == null)){
 
-        var username = window.localStorage.getItem("USERNAME");  
+        //var username = window.localStorage.getItem("USERNAME");  
         getUserDetail(token);
+
+        // if(response.userType=='ROLE_ARTIST'){
+        //     window.location.href = './profile.html?email='+response.username+'&val=edit' ;
+        // }else if(response.userType=='ROLE_ORGADMIN'){
+        //     window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
+        // }
         //window.location.href = './profile.html?email='+username+'&val=edit' ;
     }
 
@@ -75,10 +81,10 @@ function getUserDetail(token){
 function redirectPage(response){
     
     window.localStorage.setItem('USERNAME',response.username);  
-console.log(response.userType);
-    if(response.userType=='ARTIST'){
+
+    if(response.userType=='ROLE_ARTIST'){
         window.location.href = './profile.html?email='+response.username+'&val=edit' ;
-    }else if(response.userType=='ORG_ADMIN'){
+    }else if(response.userType=='ROLE_ORGADMIN'){
         window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
     }
     
