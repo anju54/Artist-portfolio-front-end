@@ -136,12 +136,34 @@ function populateStaffData(response){
                     + '<td>'+response[i].lName+'</td>'
                     + '<td>'+response[i].email+'</td>'
                     + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
-                    + '<td onclick="deleteStaff([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
+                    + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
                     + '</tr>';
         tableRow = tableRow.replace('[staffId]',response[i].orgStaffId);
         tableRow = tableRow.replace('[staffIdVal]',response[i].orgStaffId);
         $('#staffData tbody').append(tableRow);
     }
+}
+
+function deleteStaffConfirmation(id){
+
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                
+                deleteStaff(id);
+                swal(" Your record has been deleted!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your data is safe!");
+            }
+        });
 }
 
 function deleteStaff(id){
