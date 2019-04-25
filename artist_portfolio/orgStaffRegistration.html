@@ -16,6 +16,9 @@
     <script type="text/javascript" src="js/showCurretUser.js"></script>
     <script type="text/javascript" src="js/OrgStaff.js"></script>
     <script type="text/javascript" src="js/logout.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/loader.css" />
+    <script type="text/javascript" src="js/loader.js"></script>
 
       <style>
 
@@ -43,6 +46,8 @@
                     <li><a href="index.html"><i class="fa fa-bullseye"></i> Index </a></li>
                     <li><a href="#"><i class="fa fa-tasks"></i> Dashboard</a></li>
                     <li><a href="orgAdminProfile.html"><i class="fa fa-tasks"></i>My Profile</a></li>
+                    <li><a href="MangaeStaff.html"><i class="fa fa-tasks"></i> Mangae Staff</a></li>
+                    <li><a href="organizationRegistrtion.html"><i class="fa fa-tasks"></i>Manage Organization</a></li>
                     <!-- <li class="selected"><a href="register.html"><i class="fa fa-font"></i> Register</a></li> -->
 
                 </ul>
@@ -90,7 +95,7 @@
                 Organization Name:
             </label>
             <div class="col-md-9">
-                <p class="form-control" id="orgName" >Mindfire Solutions</p>   
+                <p class="form-control" id="orgName" ></p>   
             </div>   
         </div>
 
@@ -119,47 +124,27 @@
                 Email:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="email" placeholder="Email">   
+                <input type="text" class="form-control" id="staffEmail" placeholder="Email">   
                 <p>Allowed domains are:<span id="domain"></span></p> 
             </div>   
            
         </div>
        
-        <!-- <div>
-            <label for="country" class="col-md-2">
-                Country:
-            </label>
-            <div class="col-md-9">
-                <select name="country" id="country" class="form-control">
-                    <option>--Please Select--</option>
-                    <option>India</option>
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>United Kingdom</option>
-                    <option>Others</option>
-                </select>
-            </div>
-        </div> -->
-        <!-- <div>
-            <label for="uploadimage" class="col-md-2">
-                Upload Image:
-            </label>
-            <div class="col-md-10">
-                <input type="file" name="uploadimage" id="uploadimage">
-                <p class="help-block">
-                    Allowed formats: jpeg, jpg, gif, png
-                </p>
-            </div>
-        </div> -->
-        
         <div class="row">
             <div class="col-md-2">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <button type="submit" class="btn btn-info" id="regOrgStaff">
                     Register
                 </button>
             </div>
+            <div class="col-md-4">
+                    <button type="submit" class="btn btn-info" id="updateOrgStaff" style="float: right;display: none">
+                        Update 
+                    </button>
+                </div>
+                <div class="col-md-1">
+                    </div>
         </div>
     </div>
     </div>
