@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/local.css" />
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/showCurretUser.js"></script>
+    <script type="text/javascript" src="js/OrgStaff.js"></script>
+    <script type="text/javascript" src="js/logout.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/loader.css" />
+    <script type="text/javascript" src="js/loader.js"></script>
+
+      <style>
+
+        div {
+            padding-bottom:20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Back to Admin</a>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li><a href="index.html"><i class="fa fa-bullseye"></i> Index </a></li>
+                    <!-- <li><a href="#"><i class="fa fa-tasks"></i> Dashboard</a></li> -->
+                    <li><a href="orgAdminProfile.html"><i class="fa fa-tasks"></i>My Profile</a></li>
+                    <li><a href="MangaeStaff.html"><i class="fa fa-tasks"></i> Mangae Staff</a></li>
+                    <li><a href="organizationRegistrtion.html"><i class="fa fa-tasks"></i>Manage Organization</a></li>
+                    <!-- <li class="selected"><a href="register.html"><i class="fa fa-font"></i> Register</a></li> -->
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li class="dropdown messages-dropdown">
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">2 New Messages</li>
+                            <li class="message-preview">
+                            </li>
+                            <li class="divider"></li>
+                        </ul>
+
+                        <li class="dropdown messages-dropdown">
+                            <div class="col-md-7 col-4 align-self-center">
+                                <a href="" class="btn waves-effect waves-light btn-danger pull-right hidden-sm-down"
+                                    onclick="redirectPage()" id="addStaffBtn">
+                                    Add Staff</a>
+                            </div>
+                        </li>
+                    </li>
+                     <li class="dropdown user-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><span id="fullName"></span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                            
+                            <li class="divider"></li>
+                            <li><a href="" id="logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    <div class="row">
+        <div class=" col-md-8">
+            <table class="table table-condensed" id="staffData" style=" margin-top: 25px;  margin-left: 25px;">
+                <thead>
+                    <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <!-- <tr>
+                    <td >John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="col-md-4">
+            <button type="button" id="addStaffBtn">Add staff here</button>
+        </div>  -->
+    </div>
+    </div>
+
+</body>
+</html>
