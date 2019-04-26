@@ -25,9 +25,12 @@ function getOrganizationByOrganizerId(token){
         },
         'async': false,
         success: function (response) {
+            $('#regOrg').hide();
             if(response!=null){
                 console.log(response);
+                window.localStorage.setItem("ORGANIZATIONID",response.organizationId);  
                 setOrganizationData(response);
+                getDomainByOrganizerId(token);
             }             
         },
         error: function( error) {
@@ -39,6 +42,7 @@ function getOrganizationByOrganizerId(token){
 
 function setOrganizationData(response){
 
+    $('#orgName').text(response.organizationName);
     $('#orgName').val(response.organizationName);
     $('#website').val(response.organizationWebsite);
     $('#conatctNo').val(response.contactNumber);

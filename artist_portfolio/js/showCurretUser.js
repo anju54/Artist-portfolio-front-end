@@ -16,6 +16,8 @@ function getUserDetail(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
+            window.localStorage.setItem("USERID",response.userId);       
+
             setName(response.fullName);    
         },
         error: function( ) {

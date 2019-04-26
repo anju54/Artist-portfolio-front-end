@@ -10,12 +10,16 @@ $(document).ready(function() {
         update(token);
     });
 
-    getOrganizationByOrganizerId(token);
+    //getOrganizationByOrganizerId(token);
     getAllStaff(token);
+
+    var organizerId = window.localStorage.getItem("ORGANIZERID");;
+    if(organizerId){
+        getOrganizationByOrganizerId(token);
+    }
 
     var id = getUrlParameter('id');
     if(id){
-
         getStaffDetailByStaffId(id,token);
     }
 });
@@ -67,32 +71,32 @@ function addStaff(token){
 }
 
 //This method is used to organization detail
-function getOrganizationByOrganizerId(token){
+// function getOrganizationByOrganizerId(token){
 
-    var id = window.localStorage.getItem("ORGANIZERID");
-    $.ajax({
-        url:  `${baseUrl}/api/organizer/${id}/organization` ,
-        type: "GET",
-        crossDomain: true,
-        data: {},
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization','Bearer '+token);
-        },
-        headers: {
-            "Content-Type": "application/json",
-        },
-        'async': false,
-        success: function (response) {
-            if(response!=null){
-                $('#orgName').text(response.organizationName);
-            }             
-        },
-        error: function( error) {
-            console.log(error);
-        }             
-    });
+//     var id = window.localStorage.getItem("ORGANIZERID");
+//     $.ajax({
+//         url:  `${baseUrl}/api/organizer/${id}/organization` ,
+//         type: "GET",
+//         crossDomain: true,
+//         data: {},
+//         beforeSend: function (xhr) {
+//             xhr.setRequestHeader('Authorization','Bearer '+token);
+//         },
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         'async': false,
+//         success: function (response) {
+//             if(response!=null){
+//                 $('#orgName').text(response.organizationName);
+//             }             
+//         },
+//         error: function( error) {
+//             console.log(error);
+//         }             
+//     });
     
-}
+// }
 
 function getAllStaff(token){
 

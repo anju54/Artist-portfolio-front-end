@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
+
+    <link rel="icon" type="image/x-icon" href="assets/images/icon.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
@@ -17,6 +19,7 @@
     <script type="text/javascript" src="js/logout.js"></script>
     <script type="text/javascript" src="js/organization.js"></script>
     <script type="text/javascript" src="js/organizer.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
       <style>
 
@@ -42,7 +45,8 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li><a href="index.html"><i class="fa fa-bullseye"></i> Dasboard </a></li>
-                    
+                    <li><a href="MangaeStaff.html"><i class="fa fa-tasks"></i> Mangae Staff</a></li>
+                    <li><a href="organizationRegistrtion.html"><i class="fa fa-tasks"></i>Manage Organization</a></li>
                     <li><a href="orgAdminProfile.html"><i class="fa fa-tasks"></i>My Profile</a></li>
                     <!-- <li class="selected"><a href="register.html"><i class="fa fa-font"></i> Register</a></li> -->
 
@@ -52,20 +56,10 @@
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">2 New Messages</li>
                             <li class="message-preview">
-                                <!-- <a href="#">
-                                    <span class="avatar"><i class="fa fa-bell"></i></span>
-                                    <span class="message">Security alert</span>
-                                </a> -->
+                                
                             </li>
                             <li class="divider"></li>
-                            <!-- <li class="message-preview">
-                                <a href="#">
-                                    <span class="avatar"><i class="fa fa-bell"></i></span>
-                                    <span class="message">Security alert</span>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Go to Inbox <span class="badge">2</span></a></li> -->
+                            
                         </ul>
                     </li>
                      <li class="dropdown user-dropdown">
@@ -121,8 +115,22 @@
             </label>
             <div class="col-md-9">
                 <input type="text" class="form-control" id="address" placeholder="Enter address">   
-                <p>Allowed domains are:<span id="domain"></span></p> 
+                <!-- <p>Allowed domains are:<span id="domain"></span></p>  -->
             </div>   
+           
+        </div>
+
+        <div>
+            <label for="Email" class="col-md-2">
+               Enter domain:
+            </label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" id="domain" placeholder="Enter Domain">   
+                <p>Allowed domains are:<span id="domainName"></span></p> 
+            </div> 
+            <div class="col-md-5">
+                <button type="button" id="addMore">Add More</button>
+            </div>  
            
         </div>
        
