@@ -1,5 +1,6 @@
 #error,#emailError,#fnameError,#lnameError,#passwordError,#imageUploadError,#profileNameError,
-#profilePicShowError,#emailErrorMsg,#colorError,#fbError,#tError,#lError
+#profilePicShowError,#emailErrorMsg,#colorError,#fbError,#tError,#lError,
+#errName,#errCN,#errWebsite,#domainErr,#fnameErrorMsg
 {
     color: red;
 }

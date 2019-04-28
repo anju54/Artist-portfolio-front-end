@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     var organizerId = window.localStorage.getItem("ORGANIZERID");;
     if(organizerId){
-        getOrganizationByOrganizerId(token);
+        (token);
     }
 
     var id = getUrlParameter('id');
@@ -45,30 +45,43 @@ function addStaff(token){
     }
     
     data = JSON.stringify(data);
-    showLoader();
-    $.ajax({
-        url:  `${baseUrl}/api/orgStaff/` ,
-        type: "POST",
-        crossDomain: true,
-        data: data,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
-        },
-        success: function (response) {
-          swal("data saved successfully!!");    
-        },
-        headers: {
-            "Content-Type": "application/json",
-        },
-        'async': false,
-        error: function(error) {
-            console.log(error);
-        } ,
-        complete: function () {
-            hideLoader();
-        }        
-    });
+   
+    if(validation()){
+        $('.swal-overlay').hide();
+        showLoader();
+        $.ajax({
+            url:  `${baseUrl}/api/orgStaff/` ,
+            type: "POST",
+            crossDomain: true,
+            data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+            },
+            success: function (response) {
+                hideLoader();
+                $('.swal-overlay').show();
+                swal("data saved successfully!!"); 
+                window.location.href = './MangaeStaff.html';   
+            },
+            headers: {
+                "Content-Type": "application/json",
+            },
+            'async': false,
+            error: function(error) {
+                console.log(error);
+            } ,
+            complete: function () {
+                
+            }        
+        });
+    }
 }
+$(document).ajaxStart(function(){
+    showLoader();
+});
+$(document).ajaxStop(function(){
+    hideLoader();
+});
 
 //This method is used to organization detail
 // function getOrganizationByOrganizerId(token){
@@ -114,7 +127,7 @@ function getAllStaff(token){
         'async': false,
         success: function (response) {
             if(response!=null){
-                console.log(response);
+                
                 populateStaffData(response);
             }             
         },
@@ -215,7 +228,7 @@ function update(id){
         "fName":firstNameVal,
         "lName":lastNameVal,
     }
-    console.log(data);
+    
     data = JSON.stringify(data);
     showLoader();
 
@@ -238,6 +251,9 @@ function update(id){
         },
         error: function( error) {
             console.log(error);
+        },
+        complete: function(){
+            // hideLoader();
         }             
     });
 
@@ -276,7 +292,7 @@ function getStaffDetailByStaffId(id,token){
         },
         'async': false,
         success: function (response) {
-           console.log(response); 
+           
             $('#orgName').text();
             $('#staffFirstName').val(response.fName);
             $('#stafflastName').val(response.lName);
@@ -288,3 +304,78 @@ function getStaffDetailByStaffId(id,token){
         }             
     });
 }
+
+function validation(){
+    
+    var email = $('#staffEmail').val();
+    var fName = $('#staffFirstName').val();
+    // var lName = $('#stafflastName').val();
+
+    if(  empty("First Name",fName) &&  validateEmail(email) ) {
+        return true;
+
+    } else return false;
+
+}
+
+function validateEmail(email){
+
+    if(!empty("email", email)){
+       
+        return false;
+    }
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (reg.test(email)) {
+ 
+        var i = email.indexOf("@");
+        var substr = email.substr(i,email.length);
+        var existDomain = $('#domainName').text();
+        var arr = existDomain.split(',');
+
+        for(var i=0;i<arr.length;i++){
+
+            if(substr==arr[i]){
+                return true;
+            }else if(substr!=arr[i] && i==arr.length-1){
+                $('#emailErrorMsg').show();
+                $('#emailErrorMsg').text('This domain address does not belongs to us');
+                return false;
+            }
+        }
+    }else {
+        $('#emailErrorMsg').show();
+        $('#emailErrorMsg').text('Please provide a valid email address');
+        return false;
+    }
+    return true;
+}
+
+// check for empty
+function empty(field, data){
+    var error = "";
+   
+    if (data === ''|| data === null || data === undefined) {
+        error = "You didn't enter "+field+".";
+        if(field=="email"){
+            $('#emailErrorMsg').show();
+            $('#emailErrorMsg').text(error);
+        }else if(field=="First Name"){
+            
+            $('#fnameErrorMsg').show();
+            $('#fnameErrorMsg').text(error);
+        }
+           
+        
+        return false;
+    } 
+    return true;
+}
+
+function hideErrEmail(){
+    $('#emailErrorMsg').hide();
+}
+
+function fnameErrorHide(){
+    $('#fnameErrorMsg').hide();
+}
+

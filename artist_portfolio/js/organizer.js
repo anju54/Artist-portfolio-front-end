@@ -3,8 +3,7 @@ $(document).ready(function() {
     var token = window.localStorage.getItem("TOKEN");
     if(token){
         
-        getOrganizerId(token);
-        
+        getOrganizerId(token);   
     }
 });
 
@@ -27,7 +26,7 @@ function getOrganizationByOrganizerId(token){
         success: function (response) {
             $('#regOrg').hide();
             if(response!=null){
-                console.log(response);
+                
                 window.localStorage.setItem("ORGANIZATIONID",response.organizationId);  
                 setOrganizationData(response);
                 getDomainByOrganizerId(token);
@@ -45,9 +44,12 @@ function setOrganizationData(response){
     $('#orgName').text(response.organizationName);
     $('#orgName').val(response.organizationName);
     $('#website').val(response.organizationWebsite);
-    $('#conatctNo').val(response.contactNumber);
+    $('#conatctNumber').val(response.contactNumber);
     $('#address').val(response.organizationAddress);
 
+    // $('#orgNameDiv').empty();
+    // var htmlField =  '<p id="orgNameP">'+response.organizationName+'</p></div>';
+    //  $('#orgNameDiv').append(htmlField);
 }
 
 //This method is used to get organizer id
@@ -71,7 +73,7 @@ function getOrganizerId(token){
             }             
         },
         error: function( error) {
-            console.log(error);
+            
         }             
     });
 }
@@ -96,7 +98,7 @@ function addOrganizer(token){
         },
         'async': false,
         error: function(error) {
-            console.log(error);
+           
         }         
     });
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
+    <link rel="stylesheet" type="text/css" href="css/error.css" />
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -93,11 +94,11 @@
         </div>
       
         <div>
-            <label for="First Name" class="col-md-2">
+            <label for="Organization Name" class="col-md-2">
                 Organization Name:
             </label>
             <div class="col-md-9">
-                <p class="form-control" id="orgName" ></p>   
+                <p id="orgName" ></p>   
             </div>   
         </div>
 
@@ -107,7 +108,8 @@
                 First Name:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="staffFirstName" placeholder="First Name">    
+                <input type="text" class="form-control" id="staffFirstName" placeholder="First Name" onclick="fnameErrorHide()">    
+                <p id="fnameErrorMsg"></p>
             </div>   
             
         </div>
@@ -126,7 +128,8 @@
                 Email:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="staffEmail" placeholder="Email">   
+                <input type="text" class="form-control" id="staffEmail" placeholder="Email" onclick="hideErrEmail()"> 
+                <p id="emailErrorMsg"></p>  
                 <p>Allowed domains are:<span id="domainName"></span></p> 
             </div>   
            

@@ -28,6 +28,9 @@ function logout(token){
             window.localStorage.removeItem("TOKEN");
             window.localStorage.removeItem("ARTIST");
             window.localStorage.removeItem("USERNAME");
+            window.localStorage.removeItem("ORGANIZERID");
+            window.localStorage.removeItem("ORGANIZATIONID");
+            window.localStorage.removeItem("USERID");
             swal("successfuly logout from the application");
         } 
     });   

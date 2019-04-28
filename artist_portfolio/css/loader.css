@@ -3,11 +3,11 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 10000000;
     top: 0px;
     left: 0px;
-    /* opacity: .9; in FireFox */
-    /* filter: alpha(opacity=90); in IE */
+    opacity: .9; 
+    filter: alpha(opacity=90); 
 }
 
 .over {

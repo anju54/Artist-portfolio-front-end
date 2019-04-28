@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/local.css" />
+    <link rel="stylesheet" type="text/css" href="css/error.css" />
+    <link rel="stylesheet" type="text/css" href="css/loader.css" />
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -19,6 +21,7 @@
     <script type="text/javascript" src="js/logout.js"></script>
     <script type="text/javascript" src="js/organization.js"></script>
     <script type="text/javascript" src="js/organizer.js"></script>
+    <script type="text/javascript" src="js/loader.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
       <style>
@@ -84,9 +87,14 @@
             <label for="First Name" class="col-md-2">
                 Organization Name:
             </label>
-            <div class="col-md-9">
-                <input type="text" class="form-control" id="orgName" placeholder="Enter Organization Name">  
-            </div>   
+            <!-- <div id="orgNameMainDiv"> -->
+                <div class="col-md-9" id="orgNameDiv">
+                    <input type="text" class="form-control" onclick="hideErrOrgName()" 
+                    id="orgName" placeholder="Enter Organization Name"> 
+                    
+                    <p id="errName"></p>  
+                </div>
+            <!-- </div>    -->
         </div>
 
 
@@ -95,7 +103,9 @@
                 Organization website:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="website" placeholder="Enter organization website">    
+                <input type="text" class="form-control" id="website" placeholder="Enter organization website"
+                onclick="hideErrWebsite()">  
+                <p id="errWebsite"></p>   
             </div>   
             
         </div>
@@ -105,7 +115,9 @@
                 Organization Contact number:
             </label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="contactNo" placeholder="Enter contact number">    
+                <input type="number" class="form-control" onclick="hideErrCn()"
+                 id="contactNumber" placeholder="Enter contact number">  
+                <p id="errCN"></p>  
             </div>   
         </div>
 
@@ -125,11 +137,12 @@
                Enter domain:
             </label>
             <div class="col-md-5">
-                <input type="text" class="form-control" id="domain" placeholder="Enter Domain">   
+                <input type="text" class="form-control" id="domain" placeholder="Enter Domain" onclick="hideDomainErr()">  
+                <p id="domainErr"></p> 
                 <p>Allowed domains are:<span id="domainName"></span></p> 
             </div> 
             <div class="col-md-5">
-                <button type="button" id="addMore">Add More</button>
+                <button type="button" class="btn btn-success" id="addMore" style="color: black;">Add More</button>
             </div>  
            
         </div>

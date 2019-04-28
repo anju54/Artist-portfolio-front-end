@@ -2,8 +2,12 @@ $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
     getOrganizerId(token);
-    getOrganizationByOrganizerId(token);
 
+    var id = window.localStorage.getItem("ORGANIZERID");
+    if(id){
+        getOrganizationByOrganizerId(token);
+    }
+    
     $('#regOrg').click(function(){
         addOrganization(token);
     });
@@ -17,7 +21,7 @@ function addOrganization(token){
 
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
-    var contactVal = $('#contactNo').val();
+    var contactVal = $('#contactNumber').val();
     var addressVal = $('#address').val();
     var domain = $('#domain').val();
 
@@ -28,28 +32,38 @@ function addOrganization(token){
         "contactNo":contactVal,
         "domainName":domain
     };
-    console.log(data);
+   
     data = JSON.stringify(data);
+    
+    if(formValidation()){
+        showLoader();
+        $.ajax({
+            url:  `${baseUrl}/api/organization/` ,
+            type: "POST",
+            crossDomain: true,
+            data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+            },
+            success: function (response) {
+                //addOrganizer(token);
+                swal("organization registered successfully!!");
+                 //getDomainByOrganizerId(token);
 
-    $.ajax({
-        url:  `${baseUrl}/api/organization/` ,
-        type: "POST",
-        crossDomain: true,
-        data: data,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
-        },
-        success: function (response) {
-            //addOrganizer(token);
-        },
-        headers: {
-            "Content-Type": "application/json",
-        },
-        'async': false,
-        error: function(error) {
-            console.log(error);
-        }         
-    });
+            },
+            headers: {
+                "Content-Type": "application/json",
+            },
+            'async': false,
+            error: function(error) {
+                hideLoader(); 
+            }   ,
+            complete: function(){
+                 hideLoader();
+            }        
+        });
+    }
+    
 }
 
 /**
@@ -69,12 +83,12 @@ function getDomainByOrganizerId(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            console.log(response);
+            
             //$('#domainName').text(response[0].domainName);
             processDomainData(response);
         },
         error: function(error) {
-            console.log(error);
+           console.log(error);
         }         
     });
 }
@@ -85,7 +99,7 @@ function processDomainData(response){
     for(var i=0;i<response.length;i++){
          resultString = resultString + response[i].domainName +",";
     }
-    console.log(resultString);
+    
     resultString = resultString.substr(0,resultString.length-1);
     $('#domainName').text(resultString);
 }
@@ -103,7 +117,7 @@ function addDomain(token){
 
     var data = {"domainName":domainVal};
     data = JSON.stringify(data);
-    console.log(data);
+    
     $.ajax({
         url:  `${baseUrl}/api/domain/organization/${id}` , //organizationId
         type: "POST",
@@ -113,8 +127,10 @@ function addDomain(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-          swal("domain created successfully!!");   
-          getOrganizationByOrganizerId(token); 
+            if(response){
+                swal("domain created successfully!!");   
+                getOrganizationByOrganizerId(token); 
+            }
         },
         headers: {
             "Content-Type": "application/json",
@@ -122,9 +138,92 @@ function addDomain(token){
         'async': false,
         error: function(error) {
             console.log(error);
+            $('#domainErr').show();
+            $('#domainErr').text(error.responseJSON.message);
         } ,
         complete: function () {
             //hideLoader();
         }        
     });
+}
+
+function formValidation(){
+    
+    var orgNameVal = $('#orgName').val();
+    var websiteVal = $('#website').val();
+    var contactVal = $('#contactNumber').val();
+    var addressVal = $('#address').val();
+    var domain = $('#domain').val();
+
+    if( isEmpty("Organization Name",orgNameVal) && isEmpty("Organization website",websiteVal)
+     && isEmpty("Organization contactNumber",contactVal) &&isURLvalid("Organization website",websiteVal)) {
+        return true;
+
+    } else return false;
+
+}
+
+// check for empty
+function isEmpty(field, data){
+    var error = "";
+    
+    if (data === ''|| data === null || data === undefined) {
+        error = "You didn't enter "+field+".";
+
+        if(field=="Organization Name"){
+            
+            $('#errName').show();
+            $('#errName').text(error);
+        }else if(field=="Organization website"){
+            $('#errWebsite').show();
+            $('#errWebsite').text(error);
+        }else if(field=="Organization contactNumber"){
+            $('#errCN').show();
+            $('#errCN').text(error);
+        }
+        
+        return false;
+    } 
+    return true;
+}
+
+
+function isURLvalid(field,data){
+    console.log("1...");
+    var urlPattern = new RegExp(''+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    
+    var error = "";
+
+    //if (data === ''|| data === null || data === undefined)return true;
+    if(urlPattern.test(data)){
+        return true;
+    }else{
+        console.log("2...");
+        error = "you entered wrong "+field+" URL!!";
+        $('#errWebsite').show();
+        $('#errWebsite').text(error);
+        return false;
+    }  
+    
+}
+
+function hideErrOrgName(){
+    $('#errName').hide();
+}
+
+function hideErrCn(){
+    $('#errCN').hide();
+}
+
+function hideErrWebsite(){
+    $('#errWebsite').hide();
+}
+
+function hideDomainErr(){
+    $('#domainErr').hide();
 }
