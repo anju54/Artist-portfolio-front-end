@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
 
+    getOrganizerId(token);
+
     $('#regOrgStaff').click(function(){
         addStaff(token);
     });
@@ -43,7 +45,7 @@ function addStaff(token){
         "roleName":role
 
     }
-    
+    console.log(data);
     data = JSON.stringify(data);
    
     if(validation()){
@@ -56,6 +58,7 @@ function addStaff(token){
             data: data,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+                
             },
             success: function (response) {
                 hideLoader();
@@ -68,10 +71,12 @@ function addStaff(token){
             },
             'async': false,
             error: function(error) {
+                $('#saveError').show();
+                $('#saveError').text(error.responseJSON.message);
                 
             } ,
             complete: function () {
-                
+                hideLoader();
             }        
         });
     }
@@ -85,8 +90,10 @@ $(document).ajaxStop(function(){
 
 function getAllStaff(token){
 
+    var id = window.localStorage.getItem("ORGANIZATIONID");
     $.ajax({
-        url:  `${baseUrl}/api/orgStaff/all` ,
+        //url:  `${baseUrl}/api/orgStaff/all` ,
+        url:  `${baseUrl}/api/orgStaff/all/organization/${id}` ,
         type: "GET",
         crossDomain: true,
         data: {},
@@ -131,6 +138,7 @@ function populateStaffData(response){
         tableRow = tableRow.replace('[staffIdVal]',response[i].orgStaffId);
         $('#staffData tbody').append(tableRow);
     }
+    
 }
 
 function deleteStaffConfirmation(id){
@@ -184,13 +192,14 @@ function deleteStaff(id){
 function editStaff(id){
 
     $('#updateOrgStaff').show();
-    $('#regOrgStaff').show();
+    $('#regOrgStaff').hide();
     window.location.href = './orgStaffRegistration.html?id='+id;
 }
 
-function update(id){
+function update(token){
 
-    var token = window.localStorage.getItem("TOKEN");
+    var id = getUrlParameter('id');
+    //var token = window.localStorage.getItem("TOKEN");
    
     var firstNameVal = $('#staffFirstName').val();
     var lastNameVal = $('#stafflastName').val();
@@ -218,7 +227,7 @@ function update(id){
         'async': false,
         success: function (response) {
             if(response!=null){
-                
+                swal("record updated!!")
             }             
         },
         error: function( error) {
@@ -264,10 +273,18 @@ function getStaffDetailByStaffId(id,token){
         'async': false,
         success: function (response) {
            
+            $('#updateOrgStaff').show();
+            $('#regOrgStaff').hide();
+            $('#newRegHeader').text("");
             $('#orgName').text();
             $('#staffFirstName').val(response.fName);
             $('#stafflastName').val(response.lName);
-            $('#staffEmail').val(response.email);
+            //$('#staffEmail').val(response.email);
+
+            $('#emailDiv').empty();
+            var emailTag = '<p id="staffEmail">'+response.email+'</p>';
+                      //  ' <p>Allowed domains are:<span id="domainName"></span></p> ';
+            $('#emailDiv').append(emailTag);
 
         },
         error: function( error) {
@@ -344,9 +361,13 @@ function empty(field, data){
 
 function hideErrEmail(){
     $('#emailErrorMsg').hide();
+    $('#saveError').hide();
 }
 
 function fnameErrorHide(){
     $('#fnameErrorMsg').hide();
 }
 
+function saveErrorHide(){
+    $('#saveError').hide();
+}
