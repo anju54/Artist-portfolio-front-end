@@ -58,8 +58,10 @@ function addOrganization(token){
             error: function(error) {
                 hideLoader(); 
             }   ,
-            complete: function(){
+            complete: function(error){
                  hideLoader();
+                 $('#saveOrgErr').show();
+                 $('#saveOrgErr').text(error.responseJSON.message);
             }        
         });
     }
@@ -175,6 +177,7 @@ function isEmpty(field, data){
             $('#errWebsite').show();
             $('#errWebsite').text(error);
         }else if(field=="Organization contactNumber"){
+            console.log(data);
             $('#errCN').show();
             $('#errCN').text(error);
         }
@@ -211,16 +214,21 @@ function isURLvalid(field,data){
 
 function hideErrOrgName(){
     $('#errName').hide();
+    $('#saveOrgErr').hide();
 }
 
 function hideErrCn(){
     $('#errCN').hide();
+    $('#saveOrgErr').hide();
 }
 
 function hideErrWebsite(){
     $('#errWebsite').hide();
+    $('#saveOrgErr').hide();
 }
 
 function hideDomainErr(){
     $('#domainErr').hide();
+    $('#saveOrgErr').hide();
 }
+
