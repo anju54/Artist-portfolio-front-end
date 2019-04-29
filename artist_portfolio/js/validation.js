@@ -56,7 +56,7 @@ function validateEmail(email){
 // check for empty
 function isEmpty(field, data){
     var error = "";
-    console.log(data);
+    
     if (data === ''|| data === null || data === undefined) {
         error = "You didn't enter "+field+".";
         if(field == 'First Name'){

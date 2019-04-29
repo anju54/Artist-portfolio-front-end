@@ -21,7 +21,7 @@ function addOrganization(token){
 
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
-    var contactVal = $('#contactNumber').val();
+    var contactVal = $('#cn').val();
     var addressVal = $('#address').val();
     var domain = $('#domain').val();
 
@@ -83,12 +83,9 @@ function getDomainByOrganizerId(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            
-            //$('#domainName').text(response[0].domainName);
             processDomainData(response);
         },
         error: function(error) {
-           console.log(error);
         }         
     });
 }
@@ -137,7 +134,7 @@ function addDomain(token){
         },
         'async': false,
         error: function(error) {
-            console.log(error);
+            
             $('#domainErr').show();
             $('#domainErr').text(error.responseJSON.message);
         } ,
@@ -151,7 +148,7 @@ function formValidation(){
     
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
-    var contactVal = $('#contactNumber').val();
+    var contactVal = $('#cn').val();
     var addressVal = $('#address').val();
     var domain = $('#domain').val();
 
@@ -189,7 +186,7 @@ function isEmpty(field, data){
 
 
 function isURLvalid(field,data){
-    console.log("1...");
+    
     var urlPattern = new RegExp(''+ // protocol
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
     '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
@@ -203,7 +200,7 @@ function isURLvalid(field,data){
     if(urlPattern.test(data)){
         return true;
     }else{
-        console.log("2...");
+        
         error = "you entered wrong "+field+" URL!!";
         $('#errWebsite').show();
         $('#errWebsite').text(error);

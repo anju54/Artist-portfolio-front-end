@@ -19,7 +19,7 @@ function updateUserData(token){
         "fName":fName,
         "lName":lName
     };
-    console.log(data);
+    
     data = JSON.stringify(data);
 
     $.ajax({
@@ -39,7 +39,6 @@ function updateUserData(token){
          swal("data updated");
         },
         error: function(error) {
-            console.log(error);
         },
         complete: function () {
                         

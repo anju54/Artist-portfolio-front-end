@@ -1,5 +1,5 @@
 function showLoader() {
-    console.log('kkkkkkkkkkkkkkk');
+    
     var div= document.createElement("div");
     div.className += 'overlay';
     div.id += 'overlay';

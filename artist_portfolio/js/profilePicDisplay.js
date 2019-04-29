@@ -63,7 +63,7 @@ function updateProfilePic(token,file){
                 }
             },
             error: function (error) {
-                console.log(error);
+                
                 $('#profilePicShowError').text(error.responseJSON.message);
             },
             complete: function () {

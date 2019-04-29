@@ -8,7 +8,7 @@ $(document).ready(function() {
     $('#selecArtistHeader').hide();
    
     if(token){
-       console.log(token);
+       
         $('#sideBar').show();
         $('#signinButton').hide();
         getUserDetails(token);
@@ -99,7 +99,6 @@ function getUserDetails(token){
         success: function (response) {
             
             redirectpage(response);
-            console.log(response);
         },
         error: function( ) {
         }         

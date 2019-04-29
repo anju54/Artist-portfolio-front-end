@@ -68,7 +68,7 @@ function addStaff(token){
             },
             'async': false,
             error: function(error) {
-                console.log(error);
+                
             } ,
             complete: function () {
                 
@@ -82,34 +82,6 @@ $(document).ajaxStart(function(){
 $(document).ajaxStop(function(){
     hideLoader();
 });
-
-//This method is used to organization detail
-// function getOrganizationByOrganizerId(token){
-
-//     var id = window.localStorage.getItem("ORGANIZERID");
-//     $.ajax({
-//         url:  `${baseUrl}/api/organizer/${id}/organization` ,
-//         type: "GET",
-//         crossDomain: true,
-//         data: {},
-//         beforeSend: function (xhr) {
-//             xhr.setRequestHeader('Authorization','Bearer '+token);
-//         },
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         'async': false,
-//         success: function (response) {
-//             if(response!=null){
-//                 $('#orgName').text(response.organizationName);
-//             }             
-//         },
-//         error: function( error) {
-//             console.log(error);
-//         }             
-//     });
-    
-// }
 
 function getAllStaff(token){
 
@@ -132,7 +104,7 @@ function getAllStaff(token){
             }             
         },
         error: function( error) {
-            console.log(error);
+           
         }             
     });
 }
@@ -204,7 +176,7 @@ function deleteStaff(id){
             getAllStaff(token);     
         },
         error: function( error) {
-            console.log(error);
+            
         }             
     });
 }
@@ -250,10 +222,9 @@ function update(id){
             }             
         },
         error: function( error) {
-            console.log(error);
         },
         complete: function(){
-            // hideLoader();
+             hideLoader();
         }             
     });
 
@@ -300,7 +271,7 @@ function getStaffDetailByStaffId(id,token){
 
         },
         error: function( error) {
-            console.log(error);
+            
         }             
     });
 }

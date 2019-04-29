@@ -17,7 +17,7 @@ $(document).ready(function() {
 });
 
 function bindEvent(){
-console.log("inside bind event");
+
     var token = window.localStorage.getItem("TOKEN");
     $('#imgDiv img').click(function(){
         var source = $(this).attr('src');

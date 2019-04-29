@@ -33,7 +33,7 @@ function getOrganizationByOrganizerId(token){
             }             
         },
         error: function( error) {
-            console.log(error);
+          
         }             
     });
     
@@ -44,7 +44,7 @@ function setOrganizationData(response){
     $('#orgName').text(response.organizationName);
     $('#orgName').val(response.organizationName);
     $('#website').val(response.organizationWebsite);
-    $('#conatctNumber').val(response.contactNumber);
+    $('#cn').val(response.contactNumber);
     $('#address').val(response.organizationAddress);
 
     // $('#orgNameDiv').empty();
