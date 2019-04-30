@@ -12,6 +12,10 @@ $(document).ready(function() {
         addOrganization(token);
     });
 
+    $('#updateOrg').click(function(){
+        updateOrganization(token);
+    });
+
     $('#addMore').click(function(){
         addDomain(token);
     });
@@ -66,6 +70,75 @@ function addOrganization(token){
         });
     }
     
+}
+
+function updateOrganization(token){
+
+    var id = window.localStorage.getItem("ORGANIZATIONID");
+
+    var orgNameVal = $('#orgName').val();
+    var websiteVal = $('#website').val();
+    var contactVal = $('#cn').val();
+    var addressVal = $('#address').val();
+
+    var data = {
+        "organizationName":orgNameVal,
+        "organizationWebsite":websiteVal,
+        "organizationAddress":addressVal,
+        "contactNumber":contactVal
+    };
+   console.log(data);
+    data = JSON.stringify(data);
+    
+    if(formValidation()){
+        showLoader();
+        $.ajax({
+            url:  `${baseUrl}/api/organization/${id}` ,
+            type: "PUT",
+            crossDomain: true,
+            data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+            },
+            success: function (response) {
+                //addOrganizer(token);
+                swal("organization updated successfully!!");
+                 //getDomainByOrganizerId(token);
+
+            },
+            headers: {
+                "Content-Type": "application/json",
+            },
+            'async': false,
+            error: function(error) {
+                hideLoader(); 
+            }   ,
+            complete: function(error){
+                 hideLoader();
+                 var errMsg = error.responseJSON.message;
+                 if(errMsg.includes("website")){
+
+                    $('#errWebsite').show();
+                    $('#errWebsite').text(errMsg);
+                 }else if(errMsg.includes("Organization")){
+            
+                    $('#errName').show();
+                    $('#errName').text(errMsg);
+                }else if(errMsg.includes("contact")){
+
+                    console.log(data);
+                    $('#errCN').show();
+                    $('#errCN').text(errMsg);
+                }else{
+
+                    $('#saveOrgErr').show();
+                    $('#saveOrgErr').text(errMsg);
+                }
+                
+            }        
+        });
+    }
+
 }
 
 /**

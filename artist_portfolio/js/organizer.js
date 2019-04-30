@@ -25,9 +25,11 @@ function getOrganizationByOrganizerId(token){
         'async': false,
         success: function (response) {
             $('#regOrg').hide();
+            $('#updateOrg').show();
             if(response!=null){
                 
-                window.localStorage.setItem("ORGANIZATIONID",response.organizationId);  
+                window.localStorage.setItem("ORGANIZATIONID",response.organizationId); 
+                
                 setOrganizationData(response);
                 getDomainByOrganizerId(token);
             }             
