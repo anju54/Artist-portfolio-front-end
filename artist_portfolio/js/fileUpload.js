@@ -1,5 +1,13 @@
 //This is used for uplaoding the profile pic
- function uploadProfilePic(token,file){
+ function uploadProfilePic(token,file,type){
+
+    if(type=="artist"){
+        var urlValue = `${baseUrl}/api/media/upload/profile-pic`;
+    }else if(type=="org-staff"){
+        var urlValue = `${baseUrl}/api/orgStaff/upload/profile-pic`;
+    }else if(type=="org-admin"){
+        var urlValue = `${baseUrl}/api/organizer/upload/profile-pic`;
+    }
 
     $('#profilePicShowError').text('');
    // hideLoader();
@@ -8,7 +16,7 @@
 
         $.ajax({
 
-            url:  `${baseUrl}/api/media/upload/profile-pic` ,
+            url: urlValue ,
             type: "POST",
             enctype: "multipart/form-data",
             crossDomain: true,

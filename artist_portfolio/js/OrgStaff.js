@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
-
+    
     getOrganizerId(token);
 
     $('#regOrgStaff').click(function(){
@@ -370,4 +370,46 @@ function fnameErrorHide(){
 
 function saveErrorHide(){
     $('#saveError').hide();
+}
+
+//This is used for making ajax call displaying the profile pic
+function showProfilePic(token){
+
+    $.ajax({
+        url:  `${baseUrl}/api/artist-profile/profile-pic`,
+        type: "GET",
+        crossDomain: true,
+        data: {},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        headers: {
+            "Content-Type": "application/json",
+        },
+        'async': false,
+        success: function (response) {
+            if(response){
+                
+                setProfilePic(response);  
+                $('#updateImage').show(); 
+                $('#saveImage').hide(); 
+                $('#deleteImage').show(); 
+            }else{
+                $('#saveImage').show(); 
+                $('#deleteImage').hide();
+                $('#updateImage').hide();
+            }          
+        },
+        error: function( error) {
+            
+            $('#profilePicShowError').text(error.responseJSON.message);
+        }             
+    });
+}
+
+//This is used to set the profile pic
+function setProfilePic(response){
+   
+    path = baseUrl + response.path + response.fileName;
+    $('#profileImage').attr("src",path);
 }

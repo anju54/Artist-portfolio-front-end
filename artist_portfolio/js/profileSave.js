@@ -19,13 +19,15 @@ $(document).ready(function() {
         updateProfile(token);
     });
 
+    var type ="artist";
+
     $("#updateImage").click(function(event) {
 
         event.preventDefault();
 
         var form = $('#uploadimage')[0];
         var data = new FormData(form);
-        updateProfilePic(token,data);
+        updateProfilePic(token,data,type);
     });
 
     $("#saveImage").click(function(event) {
@@ -33,7 +35,7 @@ $(document).ready(function() {
         event.preventDefault();
         var form = $('#uploadimage')[0];
         var data = new FormData(form);
-        uploadProfilePic(token,data);
+        uploadProfilePic(token,data,type);
     }); 
    
     var id = window.localStorage.getItem("ARTIST");
