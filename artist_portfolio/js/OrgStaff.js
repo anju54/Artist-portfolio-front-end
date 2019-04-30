@@ -33,8 +33,8 @@ function addStaff(token){
     var firstNameVal = $('#staffFirstName').val();
     var lastNameVal = $('#stafflastName').val();
     var emailVal = $('#staffEmail').val();
-
-    var role = "ROLE_ORGSTAFF";
+    var usertypeVAl = $("input[name='userType']:checked").val();
+   // var role = "ROLE_ORGSTAFF";
 
     var data = {
 
@@ -42,17 +42,30 @@ function addStaff(token){
         "fName":firstNameVal,
         "lName":lastNameVal,
         "organizationName":orgNameVal,
-        "roleName":role
-
+        "roleName":usertypeVAl
     }
-    console.log(data);
-    data = JSON.stringify(data);
    
+    if(usertypeVAl=="ROLE_ORGSTAFF"){
+        var urlValue = `${baseUrl}/api/orgStaff/`
+    }else if(usertypeVAl=="ROLE_ORGADMIN"){
+        
+        var urlValue = `${baseUrl}/api/organizer/user?organization=${orgNameVal}`;
+        // delete data["organizationName"];
+        data = {
+            "email":emailVal,
+            "fname":firstNameVal,
+            "lname":lastNameVal,
+            "roleName":usertypeVAl
+        }
+    }
+    data = JSON.stringify(data);
+    console.log(data); 
+
     if(validation()){
         $('.swal-overlay').hide();
         showLoader();
         $.ajax({
-            url:  `${baseUrl}/api/orgStaff/` ,
+            url:  urlValue ,
             type: "POST",
             crossDomain: true,
             data: data,
@@ -64,7 +77,7 @@ function addStaff(token){
                 hideLoader();
                 $('.swal-overlay').show();
                 swal("data saved successfully!!"); 
-                window.location.href = './MangaeStaff.html';   
+                window.location.href = './ManageStaff.html';   
             },
             headers: {
                 "Content-Type": "application/json",
@@ -105,6 +118,7 @@ function getAllStaff(token){
         },
         'async': false,
         success: function (response) {
+            console.log(response);
             if(response!=null){
                 
                 populateStaffData(response);
@@ -372,44 +386,3 @@ function saveErrorHide(){
     $('#saveError').hide();
 }
 
-//This is used for making ajax call displaying the profile pic
-function showProfilePic(token){
-
-    $.ajax({
-        url:  `${baseUrl}/api/artist-profile/profile-pic`,
-        type: "GET",
-        crossDomain: true,
-        data: {},
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization','Bearer '+token);
-        },
-        headers: {
-            "Content-Type": "application/json",
-        },
-        'async': false,
-        success: function (response) {
-            if(response){
-                
-                setProfilePic(response);  
-                $('#updateImage').show(); 
-                $('#saveImage').hide(); 
-                $('#deleteImage').show(); 
-            }else{
-                $('#saveImage').show(); 
-                $('#deleteImage').hide();
-                $('#updateImage').hide();
-            }          
-        },
-        error: function( error) {
-            
-            $('#profilePicShowError').text(error.responseJSON.message);
-        }             
-    });
-}
-
-//This is used to set the profile pic
-function setProfilePic(response){
-   
-    path = baseUrl + response.path + response.fileName;
-    $('#profileImage').attr("src",path);
-}
