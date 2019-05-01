@@ -15,13 +15,14 @@ $(document).ready(function() {
     //getOrganizationByOrganizerId(token);
     getAllStaff(token);
 
-    var organizerId = window.localStorage.getItem("ORGANIZERID");;
-    if(organizerId){
-        (token);
-    }
+    var organizerId = window.localStorage.getItem("ORGANIZERID");
+    // if(organizerId){
+    //     (token);
+    // }
 
     var id = getUrlParameter('id');
     if(id){
+        $('#roleDiv').empty();
         getStaffDetailByStaffId(id,token);
     }
 });
@@ -133,23 +134,31 @@ function getAllStaff(token){
 function populateStaffData(response){
 
     $('#staffData tbody').empty();
+    var role;
     let tableRow = '<tr>'
                  + '<td>'+response.fName+'</td>'
                  + '<td>'+response.lName+'</td>'
                  + '<td>'+response.email+'</td>'
+                 + '<td>'+response.roleName+'</td>'
                  + '</tr>';
 
     for(var i=0; i<response.length;i++){
 
+        role = response[i].roleName.substr(5,response[i].roleName.length);
+        
         tableRow = '<tr>'
                     + '<td>'+response[i].fName+'</td>'
                     + '<td>'+response[i].lName+'</td>'
                     + '<td>'+response[i].email+'</td>'
+                    + '<td>'+role+'</td>'
                     + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
                     + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
                     + '</tr>';
+        //var email = JSON.stringify(response[i].email);
+       
         tableRow = tableRow.replace('[staffId]',response[i].orgStaffId);
         tableRow = tableRow.replace('[staffIdVal]',response[i].orgStaffId);
+       
         $('#staffData tbody').append(tableRow);
     }
     
@@ -207,6 +216,7 @@ function editStaff(id){
 
     $('#updateOrgStaff').show();
     $('#regOrgStaff').hide();
+    $('#roleDiv').empty();
     window.location.href = './orgStaffRegistration.html?id='+id;
 }
 
@@ -271,10 +281,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function getStaffDetailByStaffId(id,token){
+function getStaffDetailByStaffId(email,token){
 
     $.ajax({
-        url:  `${baseUrl}/api/orgStaff/${id}` ,
+        url:  `${baseUrl}/api/orgStaff/${email}` ,
         type: "GET",
         crossDomain: true,
         data: {},
