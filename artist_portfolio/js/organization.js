@@ -23,6 +23,8 @@ $(document).ready(function() {
 
 function addOrganization(token){
 
+    var email = window.localStorage.getItem("USERNAME");
+
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
     var contactVal = $('#cn').val();
@@ -42,7 +44,7 @@ function addOrganization(token){
     if(formValidation()){
         showLoader();
         $.ajax({
-            url:  `${baseUrl}/api/organization/` ,
+            url:  `${baseUrl}/api/organization/${email}` ,
             type: "POST",
             crossDomain: true,
             data: data,
@@ -147,10 +149,10 @@ function updateOrganization(token){
  */
 function getDomainByOrganizerId(token){
 
-    var id = window.localStorage.getItem("ORGANIZERID");
+    var id = window.localStorage.getItem("ORGANIZATIONID");
 
     $.ajax({
-        url:  `${baseUrl}/api/domain/organizer/${id}` ,  //organizerid
+        url:  `${baseUrl}/api/domain/organization/${id}` ,  //organizerid
         type: "GET",
         crossDomain: true,
         data: {},
@@ -191,7 +193,7 @@ function addDomain(token){
     data = JSON.stringify(data);
     
     $.ajax({
-        url:  `${baseUrl}/api/domain/organization/${id}` , //organizationId
+        url:  `${baseUrl}//organization/${id}` , //organizationId
         type: "POST",
         crossDomain: true,
         data: data,

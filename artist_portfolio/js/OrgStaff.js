@@ -29,7 +29,7 @@ $(document).ready(function() {
 
 //This is used for adding organization staff
 function addStaff(token){
-
+console.log("1...................");
     var orgNameVal = $('#orgName').text();
     var firstNameVal = $('#staffFirstName').val();
     var lastNameVal = $('#stafflastName').val();
@@ -47,7 +47,8 @@ function addStaff(token){
     }
    
     if(usertypeVAl=="ROLE_ORGSTAFF"){
-        var urlValue = `${baseUrl}/api/orgStaff/`
+        var urlValue = `${baseUrl}/api/orgStaff/`;
+        console.log("2.....");
     }else if(usertypeVAl=="ROLE_ORGADMIN"){
         
         var urlValue = `${baseUrl}/api/organizer/user?organization=${orgNameVal}`;

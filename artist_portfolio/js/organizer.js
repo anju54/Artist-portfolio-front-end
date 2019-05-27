@@ -12,7 +12,7 @@ function getOrganizationByOrganizerId(token){
 
     var id = window.localStorage.getItem("ORGANIZERID");
     $.ajax({
-        url:  `${baseUrl}/api/organizer/${id}/organization` ,
+        url:  `${baseUrl}/api/orgStaff/${id}/organization` ,
         type: "GET",
         crossDomain: true,
         data: {},
@@ -58,7 +58,7 @@ function setOrganizationData(response){
 function getOrganizerId(token){
 
     $.ajax({
-        url:  `${baseUrl}/api/organizer/id` ,
+        url:  `${baseUrl}/api/orgStaff/current-user-id` ,
         type: "GET",
         crossDomain: true,
         data: {},
