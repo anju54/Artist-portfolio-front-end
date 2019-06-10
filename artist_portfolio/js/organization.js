@@ -193,7 +193,7 @@ function addDomain(token){
     data = JSON.stringify(data);
     
     $.ajax({
-        url:  `${baseUrl}//organization/${id}` , //organizationId
+        url:  `${baseUrl}/api/domain/organization/${id}` , //organizationId
         type: "POST",
         crossDomain: true,
         data: data,

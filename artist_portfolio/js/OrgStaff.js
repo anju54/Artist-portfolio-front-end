@@ -251,7 +251,7 @@ function update(token){
         },
         'async': false,
         success: function (response) {
-            if(response!=null){
+            if(response){
                 swal("record updated!!")
             }             
         },
