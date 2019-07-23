@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
-    if(token){
+    // if(token){
         
-        getOrganizerId(token);   
-    }
+    //     getOrganizerId(token);   
+    // }
 });
 
 //This method is used to organization detail
