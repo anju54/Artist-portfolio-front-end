@@ -85,7 +85,7 @@ function redirectPage(response){
     if(response.userType=='ROLE_ARTIST'){
         window.location.href = './profile.html?email='+response.username+'&val=edit' ;
     }else if(response.userType=='ROLE_ORGADMIN'){
-        window.location.href = './organizationRegistration.html?email='+response.username+'&val=edit' ;
+        window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
     }else if(response.userType=='ROLE_ORGSTAFF'){
         window.location.href = './orgStaffProfile.html?email='+response.username+'&val=edit' ;
     }
