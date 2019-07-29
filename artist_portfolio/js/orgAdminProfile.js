@@ -1,12 +1,46 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
+    getOrganizationByUserId(token);
     $("#update").click(function() {
         
         updateUserData(token);
     }); 
     
- });
+});
+
+function getOrganizationByUserId(token){
+
+    var userId = window.localStorage.getItem("USERID");
+    console.log(userId);
+    if(userId){
+        $.ajax({
+
+            url:  `${baseUrl}/api/orgStaff/user/${userId}/organization` ,
+            type: "GET",
+            crossDomain: true,
+            data: {},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization','Bearer '+token);
+            },
+            'async': false,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            success: function (response) {
+                console.log(response.organizationId);
+                window.localStorage.setItem("ORGANIZATIONID",response.organizationId);  
+            },
+            error: function(error) {
+
+            },
+            complete: function () {
+                            
+            }
+        });
+    }
+    
+}
 
 function updateUserData(token){
 
