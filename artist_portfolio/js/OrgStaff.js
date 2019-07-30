@@ -20,13 +20,12 @@ $(document).ready(function() {
 
 //This is used for adding organization staff
 function addStaff(token){
-console.log("1...................");
+
     var orgNameVal = $('#orgName').text();
     var firstNameVal = $('#staffFirstName').val();
     var lastNameVal = $('#stafflastName').val();
     var emailVal = $('#staffEmail').val();
     var usertypeVAl = $("input[name='userType']:checked").val();
-   // var role = "ROLE_ORGSTAFF";
 
     var data = {
 
@@ -38,9 +37,11 @@ console.log("1...................");
     }
    
     if(usertypeVAl=="ROLE_ORGSTAFF" && actionForStaff == "save"){
+
         var urlValue = `${baseUrl}/api/orgStaff/`;
-        console.log("2.....");
+
     }else if(usertypeVAl=="ROLE_ORGADMIN" && actionForStaff == "save"){ 
+
         var urlValue = `${baseUrl}/api/organizer/user?organization=${orgNameVal}`;
         // delete data["organizationName"];
         data = {
@@ -55,7 +56,9 @@ console.log("1...................");
     }
     data = JSON.stringify(data);
     console.log(data); 
-
+    console.log(urlValue);
+    console.log(actionForStaff);
+    
     if(validation()){
         $('.swal-overlay').hide();
         showLoader();
@@ -79,6 +82,7 @@ console.log("1...................");
             },
             'async': false,
             error: function(error) {
+                hideLoader();
                 $('#saveError').show();
                 $('#saveError').text(error.responseJSON.message);
                 
@@ -146,8 +150,16 @@ function populateStaffData(response){
                     + '<td>'+response[i].lName+'</td>'
                     + '<td>'+response[i].email+'</td>'
                     + '<td>'+role+'</td>'
-                    + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
-                    + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
+                    +'<td  style="text-align: center;"> <input type="checkbox" class="form-check-input" value=""></td>'
+                    // + '<td style="text-align: center; "> <div class="custom-control custom-checkbox">'
+                    // +'<input type="checkbox" class="custom-control-input" id="customCheck1" >'
+                    // +'<label class="custom-control-label" for="customCheck1"></label>'
+                    // +'</div></td>'
+                    +  '<td><button type="button" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/edit.png"></i></button>'
+                    +   '<button type="button" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
+                    + '</td>'
+                    // + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
+                    // + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
                     + '</tr>';
         //var email = JSON.stringify(response[i].email);
        
