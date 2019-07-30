@@ -28,8 +28,15 @@ function getOrganizationByUserId(token){
                 "Content-Type": "application/json",
             },
             success: function (response) {
-                console.log(response.organizationId);
-                window.localStorage.setItem("ORGANIZATIONID",response.organizationId);  
+                console.log(response);
+                
+                var organization = {
+                    "id" : response.organizationId,
+                    "name" : response.organizationName
+                }
+                organization = JSON.stringify(organization);
+                window.localStorage.setItem("ORGANIZATION",organization);  
+               
             },
             error: function(error) {
 
