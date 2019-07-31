@@ -3,12 +3,19 @@ $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
 
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var fullName = loggedInUser.name;
+    fullName = fullName.split(" ");
+    $("#firstName").text(fullName[0]) ;
+
     var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    console.log(organization);
     $('#orgName').val(organization.name);
 
     var id = getUrlParameter('id');
     if(id){
-        getExhibitionByExhibitionId(token);
+        getExhibitionByExhibitionId(token,id);
     }
 
     if(actionForExhibition == "save"){
@@ -210,13 +217,14 @@ function getExhibitionByExhibitionId(token,id){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
+            console.log(response);
             if(response){
                 var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
                 $('#orgName').val(organization.name);
                 $('#title').val(response.title) ;
-                $('#date').val(response.date); 
+                $('#exhibitionDate').val(response.date); 
                 $('#venue').val(response.venue); 
-                $('#paintingSlots').val(response.paintingSlots); 
+                $('#paintSlots').val(response.paintingSlots); 
 
                 actionForExhibition = "update";
                 console.log(actionForExhibition);
