@@ -17,7 +17,7 @@ function getUserDetail(token){
         },
         success: function (response) {
             window.localStorage.setItem("USERID",response.userId);       
-
+            $("#email").val(response.username) ;
             setName(response.fullName);    
         },
         error: function( ) {
@@ -27,18 +27,15 @@ function getUserDetail(token){
 
 // This method is used to set user data to the text field
 function setName(fullName){
-    
+    console.log(fullName);
     $("#fullName").text(" "+fullName) ;
     $("#name").text(fullName) ;
-    var type=getUrlParameter('val');
-
-    // if(type=='edit'){
-        var fullNameSplit = fullName.split(" ");
-        $("#firstName").val(fullNameSplit[0]) ;
-        $("#lastName").val(fullNameSplit[1]) ;
-        var email =  window.localStorage.getItem("USERNAME");
-        $("#email").text(email) ;
-    // }
+    var fullNameSplit = fullName.split(" ");
+    $("#firstName").text(fullNameSplit[0]) ;
+    $("#fName").val(fullNameSplit[0]) ;
+    $("#lastName").val(fullNameSplit[1]) ;
+       
+   
 
 }
 

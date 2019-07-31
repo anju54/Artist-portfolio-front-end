@@ -52,9 +52,9 @@
             </a>
           </li>
           <li class="active ">
-              <a href="./addstaff.html">
+              <a href="./exhibition.html">
                 <i class="tim-icons icon-atom"></i>
-                <p>Add staff</p>
+                <p>Manage exhibition</p>
               </a>
           </li>
         </ul>
@@ -151,7 +151,7 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label>company Name</label>
-                        <input type="text" class="form-control" placeholder="Company" value="" id="orgName"  onclick="hideErrOrgName()">
+                        <input type="text" class="form-control" placeholder="" value="" id="orgName"  onclick="hideErrOrgName()">
                       </div>
                     </div>
                     <!-- <div class="col-md-6 pl-md-1">
@@ -165,7 +165,7 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label>First name</label>
-                        <input type="text" class="form-control" placeholder="Company" value="" id="staffFirstName"  onclick="hideErrWebsite()">
+                        <input type="text" class="form-control" placeholder="" value="" id="staffFirstName"  onclick="hideErrWebsite()">
                       </div>
                     </div>
                     <div class="col-md-6 pl-md-1">
@@ -190,7 +190,7 @@
                             <label>Role</label>
                             
                       <input type="radio" name="userType"  id="student" value="ROLE_ORGSTAFF">ORG STAFF</input>
-                      <input type="radio"  name="userType" id="teacher" value="ROLE_ORGADMIN" >ORGANIZER</input>
+                      <input type="radio"  name="userType" id="teacher" value="ROLE_ORGADMIN" >ADMIN</input>
                         </div>
                     </div>
                   </div>
@@ -205,6 +205,9 @@
                     </div>
                     <div class="col-md-2">
                       <button type="submit" id="regOrgStaff" class="btn btn-fill btn-primary customBtn">Save</button>
+                    </div>
+                    <div class="col-md-2">
+                      <p id="saveError"></p>
                     </div>
                   </div>
                 </form>
@@ -222,19 +225,13 @@
   
   <!--   Core JS Files   -->
   <script src="js/jquery-1.10.2.min.js"></script>
-  <script src="core/popper.min.js"></script>
+  <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/perfect-scrollbar.jquery.min.js"></script>
  
-  <!--  Google Maps Plugin    -->
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
-  <!-- <script src="assets/js/plugins/chartjs.min.js"></script> -->
   <!--  Notifications Plugin    -->
   <script src="js/bootstrap-notify.js"></script>
   <script type="text/javascript" src="js/config.js"></script>
-  <script type="text/javascript" src="js/showCurretUser.js"></script>
   <script type="text/javascript" src="js/OrgStaff.js"></script>
   <script type="text/javascript" src="js/logout.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

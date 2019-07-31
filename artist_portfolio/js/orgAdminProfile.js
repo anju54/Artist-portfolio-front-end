@@ -1,6 +1,16 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
+
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var fullName = loggedInUser.name;
+    fullName = fullName.split(" ");
+    $("#firstName").text(fullName[0]) ;
+    $("#fName").val(fullName[0]) ;
+    $("#lastName").val(fullName[1]) ;
+    $("#email").val(loggedInUser.email) ;
+
     getOrganizationByUserId(token);
     $("#update").click(function() {
         
@@ -9,9 +19,12 @@ $(document).ready(function() {
     
 });
 
+//This is used to fetch organization detail and then set those data to local storage
 function getOrganizationByUserId(token){
 
-    var userId = window.localStorage.getItem("USERID");
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var userId = loggedInUser.userId;
     console.log(userId);
     if(userId){
         $.ajax({

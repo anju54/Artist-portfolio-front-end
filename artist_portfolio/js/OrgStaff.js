@@ -2,20 +2,26 @@ var actionForStaff = "save";
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
+
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var fullName = loggedInUser.name;
+    fullName = fullName.split(" ");
+    $("#firstName").text(fullName[0]) ;
     
     $('#regOrgStaff').click(function(){
         addStaff(token);
     });
 
-    getOrganizationByOrganizerId(token);
-    getAllStaff(token);
+   //getOrganizationByStaffId(token);
+   getAllStaff(token);
     
-    var id = getUrlParameter('id');
-    if(id){
+   var id = getUrlParameter('id');
+   if(id){
         actionForStaff = "update";
         $('#roleDiv').empty();
         getStaffDetailByStaffId(id,token);
-    }
+   }
 });
 
 //This is used for adding organization staff
@@ -102,10 +108,10 @@ $(document).ajaxStop(function(){
 
 function getAllStaff(token){
 
-    var id = window.localStorage.getItem("ORGANIZATIONID");
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
     $.ajax({
-        //url:  `${baseUrl}/api/orgStaff/all` ,
-        url:  `${baseUrl}/api/orgStaff/all/organization/${id}` ,
+        
+        url:  `${baseUrl}/api/orgStaff/all/organization/${organization.id}` ,
         type: "GET",
         crossDomain: true,
         data: {},
@@ -155,8 +161,8 @@ function populateStaffData(response){
                     // +'<input type="checkbox" class="custom-control-input" id="customCheck1" >'
                     // +'<label class="custom-control-label" for="customCheck1"></label>'
                     // +'</div></td>'
-                    +  '<td><button type="button" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/edit.png"></i></button>'
-                    +   '<button type="button" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
+                    +  '<td><button type="button" onclick="editStaff([staffId])" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/edit.png"></i></button>'
+                    +   '<button type="button" onclick="deleteStaffConfirmation([staffIdVal])" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
                     + '</td>'
                     // + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
                     // + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
@@ -226,49 +232,6 @@ function editStaff(id){
     $('#roleDiv').empty();
     window.location.href = 'addstaff.html?id='+id;
 }
-
-// function update(token){
-
-//     var id = getUrlParameter('id');
-//     //var token = window.localStorage.getItem("TOKEN");
-   
-//     var firstNameVal = $('#staffFirstName').val();
-//     var lastNameVal = $('#stafflastName').val();
-
-//     var data = {
-
-//         "fName":firstNameVal,
-//         "lName":lastNameVal,
-//     }
-    
-//     data = JSON.stringify(data);
-//     showLoader();
-
-//     $.ajax({
-//         url:  `${baseUrl}/api/orgStaff/${id}` ,
-//         type: "PUT",
-//         crossDomain: true,
-//         data: data,
-//         beforeSend: function (xhr) {
-//             xhr.setRequestHeader('Authorization','Bearer '+token);
-//         },
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         'async': false,
-//         success: function (response) {
-//             if(response){
-//                 swal("record updated!!")
-//             }             
-//         },
-//         error: function( error) {
-//         },
-//         complete: function(){
-//              hideLoader();
-//         }             
-//     });
-
-// }
 
 function redirectPage(){
 

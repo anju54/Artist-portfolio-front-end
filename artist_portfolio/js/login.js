@@ -1,26 +1,17 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
-
     if( !(token == null)){
 
-        //var username = window.localStorage.getItem("USERNAME");  
         getUserDetail(token);
-
-        // if(response.userType=='ROLE_ARTIST'){
-        //     window.location.href = './profile.html?email='+response.username+'&val=edit' ;
-        // }else if(response.userType=='ROLE_ORGADMIN'){
-        //     window.location.href = './orgAdminProfile.html?email='+response.username+'&val=edit' ;
-        // }
-        //window.location.href = './profile.html?email='+username+'&val=edit' ;
     }
 
     $("#loginBtn").click(function() {
-        //$('#error').show();
         login();
     }); 
 });
 
+// This is used to get user logged in to the application
 function login(){
 
     var emailVal = $('#email').val();
@@ -28,10 +19,8 @@ function login(){
     
     if(validate()){
 
-        var data = {
-            "email" : emailVal,
-            "password" : passwordVal
-                };
+        var data = { "email" : emailVal,
+                     "password" : passwordVal };
         data = JSON.stringify(data);  
         showLoader();
 
@@ -59,6 +48,7 @@ function login(){
     }   
 }
 
+// This is used for fetching the current logged in user information
 function getUserDetail(token){
 
     $.ajax({
@@ -70,7 +60,7 @@ function getUserDetail(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            
+            console.log(response);
             redirectPage(response);
         },
         error: function( ) {
@@ -81,6 +71,15 @@ function getUserDetail(token){
 function redirectPage(response){
     
     window.localStorage.setItem('USERNAME',response.username);  
+    var loggedInUser = {
+        "name" : response.fullName,
+        "role" : response.userType,
+        "userId" : response.userId,
+        "email" : response.username
+    }
+
+    loggedInUser = JSON.stringify(loggedInUser);
+    window.localStorage.setItem('loggedInUser',loggedInUser);
 
     if(response.userType=='ROLE_ARTIST'){
         window.location.href = './profile.html?email='+response.username+'&val=edit' ;
@@ -91,36 +90,6 @@ function redirectPage(response){
     }
     
 }
-
-// used to set  cookie
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    
-}
-
-// This is used to get cookie value
-function getCookie(name) {
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    }
-    else
-    {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-        end = dc.length;
-        }
-    }
-    return decodeURI(dc.substring(begin + prefix.length, end));
-} 
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),

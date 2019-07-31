@@ -1,12 +1,20 @@
 $(document).ready(function() {
 
-    var token = window.localStorage.getItem("TOKEN");
-    getOrganizerId(token);
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var fullName = loggedInUser.name;
+    fullName = fullName.split(" ");
+    $("#firstName").text(fullName[0]) ;
 
-    var id = window.localStorage.getItem("ORGANIZERID");
-    if(id){
-        getOrganizationByOrganizerId(token);
-    }
+    var token = window.localStorage.getItem("TOKEN");
+    getOrganizationById(token);
+    getDomainByOrganizerId(token);
+    // getOrganizerId(token);
+
+    // var id = window.localStorage.getItem("ORGANIZERID");
+    // if(id){
+    //    getOrganizationByStaffId(token);
+    // }
     
     $('#regOrg').click(function(){
         addOrganization(token);
@@ -21,9 +29,48 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * This is used to get organization by id
+ * @param id
+ *      organization id
+ */
+function getOrganizationById(token){
+
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+
+    $.ajax({
+        
+        url:  `${baseUrl}/api/organization/${organization.id}` ,
+        type: "GET",
+        crossDomain: true,
+        data: {},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        'async': false,
+        success: function (response) {
+            console.log(response);
+            setOrganizationData(response);
+        },
+        error: function( error) {  
+        }             
+    });
+
+}
+function setOrganizationData(response){
+
+    $('#orgName').text(response.organizationName);
+    $('#orgName').val(response.organizationName);
+    $('#website').val(response.organizationWebsite);
+    $('#cn').val(response.contactNumber);
+    $('#address').val(response.organizationAddress);
+}
+
 function addOrganization(token){
 
-    var email = window.localStorage.getItem("USERNAME");
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var email = loggedInUser.email;
 
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
@@ -76,7 +123,8 @@ function addOrganization(token){
 
 function updateOrganization(token){
 
-    var id = window.localStorage.getItem("ORGANIZATIONID");
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    var id = organization.id;
 
     var orgNameVal = $('#orgName').val();
     var websiteVal = $('#website').val();
@@ -89,7 +137,7 @@ function updateOrganization(token){
         "organizationAddress":addressVal,
         "contactNumber":contactVal
     };
-   console.log(data);
+   
     data = JSON.stringify(data);
     
     if(formValidation()){
@@ -149,7 +197,8 @@ function updateOrganization(token){
  */
 function getDomainByOrganizerId(token){
 
-    var id = window.localStorage.getItem("ORGANIZATIONID");
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    var id = organization.id;
 
     $.ajax({
         url:  `${baseUrl}/api/domain/organization/${id}` ,  //organizerid
@@ -185,7 +234,8 @@ function processDomainData(response){
 function addDomain(token){
 
     //showLoader();
-    var id = window.localStorage.getItem("ORGANIZATIONID");
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    var id = organization.id;
 
     var domainVal = $('#domain').val();
 
@@ -203,7 +253,7 @@ function addDomain(token){
         success: function (response) {
             if(response){
                 swal("domain created successfully!!");   
-                getOrganizationByOrganizerId(token); 
+               getOrganizationByStaffId(token); 
             }
         },
         headers: {

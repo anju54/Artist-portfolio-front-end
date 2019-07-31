@@ -8,7 +8,7 @@ $(document).ready(function() {
 });
 
 //This method is used to organization detail
-function getOrganizationByOrganizerId(token){
+function getOrganizationByStaffId(token){
 
     var id = window.localStorage.getItem("ORGANIZERID");
     $.ajax({
@@ -71,7 +71,7 @@ function getOrganizerId(token){
         'async': false,
         success: function (response) {
             if(response!=null){
-                window.localStorage.setItem("ORGANIZERID",response); 
+                 window.localStorage.setItem("ORGANIZERID",response); 
             }             
         },
         error: function( error) {
