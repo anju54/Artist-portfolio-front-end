@@ -3,15 +3,24 @@ $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
 
-    getAllExhibitionByOrgId(token);
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    $('#orgName').val(organization.name);
 
-    getExhibitionByExhibitionId(token);
+    var id = getUrlParameter('id');
+    if(id){
+        getExhibitionByExhibitionId(token);
+    }
 
+    if(actionForExhibition == "save"){
+        getAllExhibitionByOrgId(token);
+    }
+    
     $('#saveExhibition').click(function(){
         addExhibition(token);
     });
 });
 
+// This is used to update and save the exhibition 
 function addExhibition(token){
 
     var id = getUrlParameter('id');
@@ -51,6 +60,11 @@ function addExhibition(token){
         'async': false,
         success: function (response) {
             console.log(response);
+            if(response.status=="success"){
+                swal("your data has been updated!!");
+            }else{
+                $('#exhError').text("Error updating data..Try again!!");
+            }
         },
         error: function(error) {
             hideLoader(); 
@@ -76,17 +90,20 @@ function getAllExhibitionByOrgId(token){
             xhr.setRequestHeader('Authorization', 'Bearer '+ token);
         },
         success: function (response) {
-            console.log("here");
             console.log(response);
-            populateExhibitionData(response);
+            if(response){
+                populateExhibitionData(response);
+            } 
         },
         error: function( ) {
         }         
     });
 }
 
+//This is for populating exhibition data into tabular format
 function populateExhibitionData(response){
     
+    $('#exhibitionData tbody').empty();
     let tableRow = '<tr>'
                  + '<td>'+response.title+'</td>'
                  + '<td>'+response.venue+'</td>'
@@ -96,16 +113,20 @@ function populateExhibitionData(response){
 
     for(var i=0; i<response.length;i++){
 
+        if(!response[i].venue){
+            response[i].venue = "";
+        }
+        if(!response[i].date){
+            response[i].date = "";
+        }
         tableRow = '<tr>'
                     + '<td>'+response[i].title+'</td>'
                     + '<td>'+response[i].venue+'</td>'
                     + '<td>'+response[i].date+'</td>'
                     + '<td>'+response[i].paintingSlots+'</td>'
                     + '<td><button type="button"  onclick="editExhibition([exhibitionId])"  class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/edit.png"></i></button>'
-                    + '<button type="button"  onclick="deleteExhibitionConfirmation([exhibitionIdVal])" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
+                    + '<button type="button"  onclick="deleteExhibitionConfirmation([exhibitionIdVal])" id="exhDelBtn" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
                     + '</td>'
-                    // + '<td onclick="editExhibition([exhibitionId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
-                    // + '<td onclick="deleteExhibitionConfirmation([exhibitionIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
                     + '</tr>';
         tableRow = tableRow.replace('[exhibitionId]',response[i].id);
         tableRow = tableRow.replace('[exhibitionIdVal]',response[i].id);
@@ -116,6 +137,52 @@ function populateExhibitionData(response){
 
 function editExhibition(id){
     window.location.href = 'addExhibition.html?id='+id;
+}
+
+function deleteExhibitionConfirmation(id){
+
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                
+                deleteExhibition(id);
+                // swal(" Your record has been deleted!", {
+                //     icon: "success",
+                // });
+            } else {
+                swal("Your data is safe!");
+            }
+        });
+}
+
+function deleteExhibition(id){
+
+    var token = window.localStorage.getItem("TOKEN");
+    $.ajax({
+        url:  `${baseUrl}/api/exhibition/${id}` ,
+        type: "DELETE",
+        crossDomain: true,
+        async : false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+        },
+        success: function (response) {
+             if(response){
+                 swal("Deleted Successfully!!");
+                 getAllExhibitionByOrgId(token);
+             }else{
+                 swal("Opps! error deleting data");
+             }
+        },
+        error: function( ) {
+        }         
+    });
 }
 
 // method to get url parameter
@@ -131,10 +198,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-
-function getExhibitionByExhibitionId(token){
-
-    var id = getUrlParameter('id');
+//This is used to get particular exhibition by exhibition id
+function getExhibitionByExhibitionId(token,id){
 
     $.ajax({
         url:  `${baseUrl}/api/exhibition/${id}` ,

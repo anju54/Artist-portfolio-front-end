@@ -2,3 +2,8 @@
     margin-top: 55px;
     margin-left: 50px;
 }
+
+/* This is for exhibition delete button populating through js */
+#exhDelBtn{
+    margin: 10px;
+}
