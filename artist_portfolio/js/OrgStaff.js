@@ -99,12 +99,12 @@ function addStaff(token){
         });
     }
 }
-$(document).ajaxStart(function(){
-    showLoader();
-});
-$(document).ajaxStop(function(){
-    hideLoader();
-});
+// $(document).ajaxStart(function(){
+//     showLoader();
+// });
+// $(document).ajaxStop(function(){
+//     hideLoader();
+// });
 
 function getAllStaff(token){
 
