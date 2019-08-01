@@ -13,6 +13,8 @@ $(document).ready(function() {
     console.log(organization);
     $('#orgName').val(organization.name);
 
+    getAllStaffByorganization(token);
+
     var id = getUrlParameter('id');
     if(id){
         getExhibitionByExhibitionId(token,id);
@@ -26,6 +28,47 @@ $(document).ready(function() {
         addExhibition(token);
     });
 });
+
+// This is used to get all staff of organization
+function getAllStaffByorganization(token){
+
+    var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
+    $.ajax({
+        
+        url:  `${baseUrl}/api/orgStaff/all/organization/${organization.id}` ,
+        type: "GET",
+        crossDomain: true,
+        data: {},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        headers: {
+            "Content-Type": "application/json",
+        },
+        'async': false,
+        success: function (response) {
+            console.log(response);
+            if(response!=null){
+                
+                populateStaffDataInCheckBoxFormate(response);
+            }             
+        },
+        error: function( error) {
+           
+        }             
+    });
+}
+
+function populateStaffDataInCheckBoxFormate(response){
+
+    for(var i=0; i<response.length;i++){
+        console.log(response[i].fName+" "+response[i].lName);
+        var listRow = ' <label for="one">'
+                  +'<input name="paintingList" type="checkbox" id="'+response[i].orgStaffId+"_staff"+ '"value="' +response[i].fName+" "+response[i].lName+ '" />' 
+                  +response[i].fName+" "+response[i].lName+ '</label>';
+        $("#checkboxes").append(listRow);
+    }
+}
 
 // This is used to update and save the exhibition 
 function addExhibition(token){
@@ -234,3 +277,27 @@ function getExhibitionByExhibitionId(token,id){
         }         
     });
 }
+
+
+//************This is for populating checkbox */
+var expanded = false;
+
+function showCheckboxes() {
+    var checkboxes = document.getElementById("checkboxes");
+    if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+    } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+    }
+}   
+$(document).mouseup(function(e) 
+{
+    var container = $("#checkboxes");
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
+//************ */
