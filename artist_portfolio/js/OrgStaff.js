@@ -13,7 +13,6 @@ $(document).ready(function() {
         addStaff(token);
     });
 
-   //getOrganizationByStaffId(token);
    getAllStaff(token);
     
    var id = getUrlParameter('id');
@@ -106,6 +105,7 @@ function addStaff(token){
 //     hideLoader();
 // });
 
+// This is used to get all staff of organization
 function getAllStaff(token){
 
     var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
@@ -123,7 +123,7 @@ function getAllStaff(token){
         },
         'async': false,
         success: function (response) {
-            console.log(response);
+            
             if(response!=null){
                 
                 populateStaffData(response);
@@ -135,9 +135,9 @@ function getAllStaff(token){
     });
 }
 
+// This is used for populating staff data
 function populateStaffData(response){
-    console.log(response);
-       
+  
     $('#staffData tbody').empty();
     var role;
     let tableRow = '<tr>'
@@ -156,19 +156,10 @@ function populateStaffData(response){
                     + '<td>'+response[i].lName+'</td>'
                     + '<td>'+response[i].email+'</td>'
                     + '<td>'+role+'</td>'
-                    +'<td  style="text-align: center;"> <input type="checkbox" class="form-check-input" value=""></td>'
-                    // + '<td style="text-align: center; "> <div class="custom-control custom-checkbox">'
-                    // +'<input type="checkbox" class="custom-control-input" id="customCheck1" >'
-                    // +'<label class="custom-control-label" for="customCheck1"></label>'
-                    // +'</div></td>'
                     +  '<td><button type="button" onclick="editStaff([staffId])" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/edit.png"></i></button>'
                     +   '<button type="button" onclick="deleteStaffConfirmation([staffIdVal])" class="btn btn-success btn-sm editDelBtn"><img src="https://img.icons8.com/material/10/000000/delete-sign.png"></button>'     
                     + '</td>'
-                    // + '<td onclick="editStaff([staffId])" style="cursor: pointer;color:blue;">'+"Edit"+'</td>'
-                    // + '<td onclick="deleteStaffConfirmation([staffIdVal])" style="cursor: pointer; color:blue;">'+"Delete"+'</td>'
                     + '</tr>';
-        //var email = JSON.stringify(response[i].email);
-       
         tableRow = tableRow.replace('[staffId]',response[i].orgStaffId);
         tableRow = tableRow.replace('[staffIdVal]',response[i].orgStaffId);
        
@@ -251,6 +242,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
+// This is used to get staff detail
 function getStaffDetailByStaffId(email,token){
 
     $.ajax({
