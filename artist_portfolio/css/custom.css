@@ -1,6 +1,7 @@
 .customBtn{
     margin-top: 55px;
     margin-left: 50px;
+    background-image: linear-gradient(to bottom left, #00f2c3, #0098f0, #00f2c3);
 }
 
 /* This is for exhibition delete button populating through js */

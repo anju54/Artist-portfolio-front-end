@@ -20443,3 +20443,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.sidebar{
+background-image: linear-gradient(to bottom left, #00f2c3, #0098f0, #00f2c3);
+}

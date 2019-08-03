@@ -13,20 +13,43 @@ $(document).ready(function() {
     console.log(organization);
     $('#orgName').val(organization.name);
 
-    getAllStaffByorganization(token);
+    var role = loggedInUser.role;
 
-    var id = getUrlParameter('id');
-    if(id){
-        getExhibitionByExhibitionId(token,id);
-    }
+    // set ajax call and page element as per the role
+    if(role=="ROLE_ORGSTAFF"){
 
-    if(actionForExhibition == "save"){
-        getAllExhibitionByOrgId(token);
+        $('.adminNavBar').remove();
+        var profileNavBar = '<li>'
+                            +'  <a href="./orgStaffProfile.html">'
+                            +'<i class="tim-icons icon-single-02"></i>'
+                            +'<p>My Profile</p> </a>'
+                            +' </li>';
+        $('.nav').append(profileNavBar);
+
+        var exhibitionNavBar = '<li>'
+                            +'  <a href="./addExhibition.html">'
+                            +'<i class="tim-icons icon-atom"></i>'
+                            +'<p>Manage exhibition</p> </a>'
+                            +' </li>';
+        $('.nav').append(exhibitionNavBar);
+        $('#assignStaffDiv').empty();
+        populateListForArtist();
+
+    }else{
+        getAllStaffByorganization(token);
+
+        if(actionForExhibition == "save"){
+            getAllExhibitionByOrgId(token);
+        }
+        
+        $('#saveExhibition').click(function(){
+            addExhibition(token);
+        });
     }
     
-    $('#saveExhibition').click(function(){
-        addExhibition(token);
-    });
+    if( getUrlParameter('id') ){
+        getExhibitionByExhibitionId(token,id);
+    }
 });
 
 // This is used to get all staff of organization
@@ -278,6 +301,29 @@ function getExhibitionByExhibitionId(token,id){
     });
 }
 
+function populateListForArtist(){
+
+    var artistListDiv = '<div class="col-md-3 pr-md-1">'
+                            + '<label class="col-md-12" style="margin-top:20px">Send Invitation to Artist here</label>'
+                        +'</div>'
+                        +'<div class="col-md-6">'
+            
+                            +'<form>'
+                                + '<div class="multiselect">'
+                                    +' <div class="selectBox" onclick="showCheckboxes()">'
+                                        +'<select class="form-control form-control-line">'
+                                        +' <option id="optionPaintingType">Select an option</option>'
+                                        +'</select>'
+                            +' <div class="overSelect"></div>'
+                                +'</div>'
+                            +'<div id="checkboxes" style="max-height: 150px; overflow-y: auto">'
+                            + '</div>'
+                            +  '  </div>'
+                        +' </form>'
+                   +' </div>';
+    $('#assignStaffDiv').append(artistListDiv);
+}
+
 
 //************This is for populating checkbox */
 var expanded = false;
@@ -300,4 +346,4 @@ $(document).mouseup(function(e)
         container.hide();
     }
 });
-//************ */
+//************ *******************************/
