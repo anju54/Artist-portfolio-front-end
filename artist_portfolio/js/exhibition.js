@@ -19,6 +19,9 @@ $(document).ready(function() {
     if(role=="ROLE_ORGSTAFF"){
 
         $('.adminNavBar').remove();
+
+        $('#profileHref').attr("href","orgStaffProfile.html");
+
         var profileNavBar = '<li>'
                             +'  <a href="./orgStaffProfile.html">'
                             +'<i class="tim-icons icon-single-02"></i>'
@@ -36,6 +39,8 @@ $(document).ready(function() {
         populateListForArtist(token);
 
     }else{
+        $('#profileHref').attr("href","orgAdminProfile.html");
+
         getAllStaffByorganization(token);
 
         if(actionForExhibition == "save"){
@@ -371,6 +376,8 @@ function populateArtistDataAsCheckBoxFormate(response){
         $("#checkboxes").append(listRow);
     }
 }
+
+
 
 //************This is for populating checkbox */
 var expanded = false;
