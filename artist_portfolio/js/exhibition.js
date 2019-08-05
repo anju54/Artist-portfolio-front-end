@@ -33,7 +33,7 @@ $(document).ready(function() {
                             +' </li>';
         $('.nav').append(exhibitionNavBar);
         $('#assignStaffDiv').empty();
-        populateListForArtist();
+        populateListForArtist(token);
 
     }else{
         getAllStaffByorganization(token);
@@ -89,6 +89,17 @@ function populateStaffDataInCheckBoxFormate(response){
         var listRow = ' <label for="one">'
                   +'<input name="paintingList" type="checkbox" id="'+response[i].orgStaffId+"_staff"+ '"value="' +response[i].fName+" "+response[i].lName+ '" />' 
                   +response[i].fName+" "+response[i].lName+ '</label>';
+        $("#checkboxes").append(listRow);
+    }
+}
+
+function populateArtistDataAsCheckBoxFormate(response){
+
+    for(var i=0; i<response.length;i++){
+        
+        var listRow = ' <label for="one">'
+                  +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
+                  +response[i].fullName+ '</label>';
         $("#checkboxes").append(listRow);
     }
 }
@@ -301,13 +312,12 @@ function getExhibitionByExhibitionId(token,id){
     });
 }
 
-function populateListForArtist(){
+function populateListForArtist(token){
 
     var artistListDiv = '<div class="col-md-3 pr-md-1">'
                             + '<label class="col-md-12" style="margin-top:20px">Send Invitation to Artist here</label>'
                         +'</div>'
                         +'<div class="col-md-6">'
-            
                             +'<form>'
                                 + '<div class="multiselect">'
                                     +' <div class="selectBox" onclick="showCheckboxes()">'
@@ -322,8 +332,45 @@ function populateListForArtist(){
                         +' </form>'
                    +' </div>';
     $('#assignStaffDiv').append(artistListDiv);
+
+    fetchArtistName(token);
 }
 
+function fetchArtistName(token){
+
+    $.ajax({
+        url:  `${baseUrl}/api/artist-profile/all` ,
+        type: "GET",
+        crossDomain: true,
+        data: {},
+        async: false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: function (response) {
+            populateArtistDataAsCheckBoxFormate(response); 
+        },
+        error: function( error) {
+           
+        }      
+        
+
+    });
+}
+
+function populateArtistDataAsCheckBoxFormate(response){
+
+    for(var i=0; i<response.length;i++){
+        
+        var listRow = ' <label for="one">'
+                  +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
+                  +response[i].fullName+ '</label>';
+        $("#checkboxes").append(listRow);
+    }
+}
 
 //************This is for populating checkbox */
 var expanded = false;
