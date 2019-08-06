@@ -10,7 +10,6 @@ $(document).ready(function() {
     $("#firstName").text(fullName[0]) ;
 
     var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
-    console.log(organization);
     $('#orgName').val(organization.name);
 
     var role = loggedInUser.role;
@@ -35,27 +34,74 @@ $(document).ready(function() {
                             +'<p>Manage exhibition</p> </a>'
                             +' </li>';
         $('.nav').append(exhibitionNavBar);
+
         $('#assignStaffDiv').empty();
+
         populateListForArtist(token);
+
 
     }else{
         $('#profileHref').attr("href","orgAdminProfile.html");
 
         getAllStaffByorganization(token);
-
+     
         if(actionForExhibition == "save"){
+            console.log("here"); 
             getAllExhibitionByOrgId(token);
         }
         
         $('#saveExhibition').click(function(){
             addExhibition(token);
         });
-    }
+
+        $("input[name='paintingList']").change(function(){
+            $.each($("input[name='paintingList']:checked"), function(){            
+                id = this.id ;
+                id = id.split("_");
+                id = id[0];
+                assignStaffForExhibition(token,id);
+            });
+        });
+
+       
+    }                   
     
     if( getUrlParameter('id') ){
+        id = getUrlParameter('id');
         getExhibitionByExhibitionId(token,id);
     }
 });
+
+function assignStaffForExhibition(token,id){ // id ( staffId )
+
+    var title  = $('#title').val();
+    console.log(title);
+
+    $.ajax({
+
+        url:`${baseUrl}/api/exhibition/${title}/org-staff/${id}`,
+        type: "PUT",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        'async': false,
+        success: function (result) {
+            console.log(result);
+            if(response.status =="success"){
+
+            }else{ // in case of failed
+                $('#assignStaffErr').text("Error in assigning staff for exhibition");
+            }
+           
+        } 
+
+    });
+
+}
 
 // This is used to get all staff of organization
 function getAllStaffByorganization(token){
@@ -96,18 +142,22 @@ function populateStaffDataInCheckBoxFormate(response){
                   +response[i].fName+" "+response[i].lName+ '</label>';
         $("#checkboxes").append(listRow);
     }
+
+    $.each($("input[name='paintingList']:checked"), function(){            
+        console.log($(this).val());
+    });
 }
 
-function populateArtistDataAsCheckBoxFormate(response){
+// function populateArtistDataAsCheckBoxFormate(response){
 
-    for(var i=0; i<response.length;i++){
+//     for(var i=0; i<response.length;i++){
         
-        var listRow = ' <label for="one">'
-                  +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
-                  +response[i].fullName+ '</label>';
-        $("#checkboxes").append(listRow);
-    }
-}
+//         var listRow = ' <label for="one">'
+//                   +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
+//                   +response[i].fullName+ '</label>';
+//         $("#checkboxes").append(listRow);
+//     }
+// }
 
 // This is used to update and save the exhibition 
 function addExhibition(token){
@@ -166,7 +216,7 @@ function addExhibition(token){
 
 // This is used to get all exhibition by organization
 function getAllExhibitionByOrgId(token){
-
+console.log("2..");
     var organization =JSON.parse(  window.localStorage.getItem("ORGANIZATION") );
 
     // showLoader();
