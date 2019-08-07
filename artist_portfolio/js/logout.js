@@ -25,6 +25,9 @@ function logout(token){
         'async': false,
         success: function (result) {
             swal("successfuly logout from the application");
+           
+        } ,
+        complete: function () {
             window.localStorage.removeItem("TOKEN");
             window.localStorage.removeItem("ARTIST");
             window.localStorage.removeItem("USERNAME");
@@ -33,6 +36,6 @@ function logout(token){
             window.localStorage.removeItem("loggedInUser");
             window.localStorage.removeItem("USERID");
            
-        } 
+        }    
     });   
 }
