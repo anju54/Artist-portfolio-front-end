@@ -38,7 +38,7 @@ $(document).ready(function() {
         $('#assignStaffDiv').empty();
 
         populateListForArtist(token);
-
+        getExhibitionByOrgStaff(token);
 
     }else{
         $('#profileHref').attr("href","orgAdminProfile.html");
@@ -71,6 +71,33 @@ $(document).ready(function() {
         getExhibitionByExhibitionId(token,id);
     }
 });
+
+function getExhibitionByOrgStaff(token){
+
+    var staffId = window.localStorage.getItem("ORGSTAFFID");
+    
+    $.ajax({
+
+        url:`${baseUrl}/api/orgStaff/${staffId}/exhibition`,
+        type: "GET",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        'async': false,
+        success: function (response) {
+                 console.log(response); 
+           
+            $('#title').val(response.title) ;
+            $('#exhibitionDate').val(response.date); 
+            $('#venue').val(response.venue); 
+            $('#paintSlots').val(response.paintingSlots); 
+        }
+    });
+}
 
 function assignStaffForExhibition(token,id){ // id ( staffId )
 
