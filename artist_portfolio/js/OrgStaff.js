@@ -11,7 +11,12 @@ $(document).ready(function() {
     
     $('#regOrgStaff').click(function(){
         addStaff(token);
+        event.preventDefault();
     });
+
+    $("input[name='userType']").on("change", function () {
+        $('#roleErr').hide();
+     });
 
    getAllStaff(token);
     
@@ -40,7 +45,11 @@ function addStaff(token){
         "organizationName":orgNameVal,
         "roleName":usertypeVAl
     }
-   
+    if(!usertypeVAl){
+        $('#roleErr').show();
+        $('#roleErr').text("Role cant be empty!!");
+        return false;
+    }
     if(usertypeVAl=="ROLE_ORGSTAFF" && actionForStaff == "save"){
 
         var urlValue = `${baseUrl}/api/orgStaff/`;
@@ -65,7 +74,7 @@ function addStaff(token){
     console.log(actionForStaff);
     
     if(validation()){
-        $('.swal-overlay').hide();
+        //$('.swal-overlay').hide();
         showLoader();
         $.ajax({
             url:  urlValue ,
@@ -77,10 +86,10 @@ function addStaff(token){
                 
             },
             success: function (response) {
-                hideLoader();
-                $('.swal-overlay').show();
+                //hideLoader();
+                // $('.swal-overlay').show();
                 swal("data saved successfully!!"); 
-                window.location.href = './ManageStaff.html';   
+                //window.location.href = './ManageStaff.html';   
             },
             headers: {
                 "Content-Type": "application/json",
@@ -229,19 +238,6 @@ function redirectPage(){
     $('#addStaffBtn').attr("href","./orgStaffRegistration.html");
 }
 
-// method to get url parameter
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),sParameterName,i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-        }
-    }
-};
-
 // This is used to get staff detail
 function getStaffDetailByStaffId(email,token){
 
@@ -325,6 +321,10 @@ function validateEmail(email){
     return true;
 }
 
+function validateForCheckBox(field,data){
+
+}
+
 // check for empty
 function empty(field, data){
     var error = "";
@@ -359,3 +359,15 @@ function saveErrorHide(){
     $('#saveError').hide();
 }
 
+// method to get url parameter
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),sParameterName,i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
