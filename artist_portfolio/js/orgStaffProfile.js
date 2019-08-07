@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
+    getOrgStaffIdByUserId(token);
 
     $('#updateImage').hide();
 
@@ -67,4 +68,31 @@ function setProfilePic(response){
    
     path = baseUrl + response.path + response.fileName;
     $('#profileImage').attr("src",path);
+}
+
+
+// This is used to fetch org staff id and the then set the id in local storage
+function getOrgStaffIdByUserId(token){
+
+    var loggedInUser = window.localStorage.getItem("loggedInUser");
+    loggedInUser = JSON.parse(loggedInUser);
+    var userId = loggedInUser.userId;
+    $.ajax({
+
+        url:`${baseUrl}/api/orgStaff/user/${userId}`,
+        type: "GET",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer '+token);
+        },
+        'async': false,
+        success: function (result) {
+            if(result){
+                window.localStorage.setItem("ORGSTAFFID",result);
+            }        
+        }
+    });
 }
