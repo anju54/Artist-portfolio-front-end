@@ -1,4 +1,5 @@
 var actionForExhibition = "save";
+var exhibitionId;
 $(document).ready(function() {
 
     var token = window.localStorage.getItem("TOKEN");
@@ -50,10 +51,6 @@ $(document).ready(function() {
             getAllExhibitionByOrgId(token);
         }
         
-        $('#saveExhibition').click(function(){
-            addExhibition(token);
-        });
-
         $("input[name='paintingList']").change(function(){
             $.each($("input[name='paintingList']:checked"), function(){            
                 id = this.id ;
@@ -64,7 +61,10 @@ $(document).ready(function() {
         });
 
        
-    }                   
+    }   
+    $('#saveExhibition').click(function(){
+        addExhibition(token);
+    });                
     
     if( getUrlParameter('id') ){
         id = getUrlParameter('id');
@@ -90,7 +90,8 @@ function getExhibitionByOrgStaff(token){
         'async': false,
         success: function (response) {
                  console.log(response); 
-           
+            exhibitionId = response.id;
+           actionForExhibition = "update";
             $('#title').val(response.title) ;
             $('#exhibitionDate').val(response.date); 
             $('#venue').val(response.venue); 
@@ -208,7 +209,7 @@ function addExhibition(token){
         var typeVal = "POST";
     }else{
 
-        urlvar =  `${baseUrl}/api/exhibition/${id}`;
+        urlvar =  `${baseUrl}/api/exhibition/${exhibitionId}`;
         var typeVal = "PUT";
         data = JSON.stringify(data);
     }
@@ -229,10 +230,13 @@ function addExhibition(token){
             if(response.status=="success"){
                 swal("your data has been updated!!");
             }else{
+                $('#exhError').show();
                 $('#exhError').text("Error updating data..Try again!!");
             }
         },
         error: function(error) {
+            console.log(error.responseJSON.message);
+            $('#exhError').text(error.responseJSON.message);
             hideLoader(); 
         },
         complete: function(error){

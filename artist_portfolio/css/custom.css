@@ -13,3 +13,9 @@
     margin-right: -35px;
     margin-top: 10px;
 }
+
+#exhError{
+    margin-top: 55px;
+    margin-left: 50px;
+    color: red;
+}
