@@ -403,7 +403,7 @@ function populateListForArtist(token){
     var artistListDiv = '<div class="col-md-3 pr-md-1">'
                             + '<label class="col-md-12" style="margin-top:20px">Send Invitation to Artist here</label>'
                         +'</div>'
-                        +'<div class="col-md-6">'
+                        +'<div class="col-md-12">'
                             +'<form>'
                                 + '<div class="multiselect">'
                                     +' <div class="selectBox" onclick="showCheckboxes()">'
@@ -451,9 +451,20 @@ function populateArtistDataAsCheckBoxFormate(response){
 
     for(var i=0; i<response.length;i++){
         
-        var listRow = ' <label for="one">'
-                  +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
-                  +response[i].fullName+ '</label>';
+        var listRow = '<div class="row">'
+                        +'<div class="col-md-3"> <label for="one">'
+                        +'<input name="paintingList" type="checkbox" id="'+response[i].artistId+"_staff"+ '"value="' +response[i].fullName+ '" />' 
+                        +response[i].fullName+ '</label></div>'
+                        +'<div class="col-md-3">'
+                            +'<label>Min slots</label>'
+                            +'<input type="text" placeholder="enter no of slots"></input>'
+                        +'</div>'
+                        +'<div class="col-md-3">'
+                            +'<label>Max slots</label>'
+                            +'<input type="text" placeholder="enter no of slots"></input>'
+                        +'</div>'
+                        +'<div class="col-md-3"><p id="invitationMsg"> </p></div>'
+                    +'</div>';
         $("#checkboxes").append(listRow);
     }
 }
